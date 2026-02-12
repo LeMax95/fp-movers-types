@@ -2111,15 +2111,108 @@ declare const CustomerInfoSchema: z.ZodObject<{
 }>;
 type CustomerInfoData = z.infer<typeof CustomerInfoSchema>;
 
+declare const DamagePhotoSchema: z.ZodObject<{
+    id: z.ZodString;
+    storedPath: z.ZodString;
+    localUri: z.ZodString;
+    mime: z.ZodLiteral<"image/jpeg">;
+    createdAt: z.ZodNumber;
+    uploaded: z.ZodOptional<z.ZodBoolean>;
+    remoteUrl: z.ZodOptional<z.ZodString>;
+    width: z.ZodOptional<z.ZodNumber>;
+    height: z.ZodOptional<z.ZodNumber>;
+    sizeBytes: z.ZodOptional<z.ZodNumber>;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    createdAt: number;
+    storedPath: string;
+    localUri: string;
+    mime: "image/jpeg";
+    uploaded?: boolean | undefined;
+    remoteUrl?: string | undefined;
+    width?: number | undefined;
+    height?: number | undefined;
+    sizeBytes?: number | undefined;
+}, {
+    id: string;
+    createdAt: number;
+    storedPath: string;
+    localUri: string;
+    mime: "image/jpeg";
+    uploaded?: boolean | undefined;
+    remoteUrl?: string | undefined;
+    width?: number | undefined;
+    height?: number | undefined;
+    sizeBytes?: number | undefined;
+}>;
+type DamagePhoto = z.infer<typeof DamagePhotoSchema>;
 declare const DamageRowSchema: z.ZodObject<{
     item: z.ZodString;
     description: z.ZodString;
+    photos: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        storedPath: z.ZodString;
+        localUri: z.ZodString;
+        mime: z.ZodLiteral<"image/jpeg">;
+        createdAt: z.ZodNumber;
+        uploaded: z.ZodOptional<z.ZodBoolean>;
+        remoteUrl: z.ZodOptional<z.ZodString>;
+        width: z.ZodOptional<z.ZodNumber>;
+        height: z.ZodOptional<z.ZodNumber>;
+        sizeBytes: z.ZodOptional<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        createdAt: number;
+        storedPath: string;
+        localUri: string;
+        mime: "image/jpeg";
+        uploaded?: boolean | undefined;
+        remoteUrl?: string | undefined;
+        width?: number | undefined;
+        height?: number | undefined;
+        sizeBytes?: number | undefined;
+    }, {
+        id: string;
+        createdAt: number;
+        storedPath: string;
+        localUri: string;
+        mime: "image/jpeg";
+        uploaded?: boolean | undefined;
+        remoteUrl?: string | undefined;
+        width?: number | undefined;
+        height?: number | undefined;
+        sizeBytes?: number | undefined;
+    }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     description: string;
     item: string;
+    photos?: {
+        id: string;
+        createdAt: number;
+        storedPath: string;
+        localUri: string;
+        mime: "image/jpeg";
+        uploaded?: boolean | undefined;
+        remoteUrl?: string | undefined;
+        width?: number | undefined;
+        height?: number | undefined;
+        sizeBytes?: number | undefined;
+    }[] | undefined;
 }, {
     description: string;
     item: string;
+    photos?: {
+        id: string;
+        createdAt: number;
+        storedPath: string;
+        localUri: string;
+        mime: "image/jpeg";
+        uploaded?: boolean | undefined;
+        remoteUrl?: string | undefined;
+        width?: number | undefined;
+        height?: number | undefined;
+        sizeBytes?: number | undefined;
+    }[] | undefined;
 }>;
 type DamageRow = z.infer<typeof DamageRowSchema>;
 
@@ -2538,22 +2631,138 @@ declare const MilburnContractDataSchema: z.ZodObject<{
     damagePre: z.ZodOptional<z.ZodArray<z.ZodObject<{
         item: z.ZodString;
         description: z.ZodString;
+        photos: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            storedPath: z.ZodString;
+            localUri: z.ZodString;
+            mime: z.ZodLiteral<"image/jpeg">;
+            createdAt: z.ZodNumber;
+            uploaded: z.ZodOptional<z.ZodBoolean>;
+            remoteUrl: z.ZodOptional<z.ZodString>;
+            width: z.ZodOptional<z.ZodNumber>;
+            height: z.ZodOptional<z.ZodNumber>;
+            sizeBytes: z.ZodOptional<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }, {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }, {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }>, "many">>;
     damagePost: z.ZodOptional<z.ZodArray<z.ZodObject<{
         item: z.ZodString;
         description: z.ZodString;
+        photos: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            storedPath: z.ZodString;
+            localUri: z.ZodString;
+            mime: z.ZodLiteral<"image/jpeg">;
+            createdAt: z.ZodNumber;
+            uploaded: z.ZodOptional<z.ZodBoolean>;
+            remoteUrl: z.ZodOptional<z.ZodString>;
+            width: z.ZodOptional<z.ZodNumber>;
+            height: z.ZodOptional<z.ZodNumber>;
+            sizeBytes: z.ZodOptional<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }, {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }, {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }>, "many">>;
     paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     summary: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
@@ -2663,10 +2872,34 @@ declare const MilburnContractDataSchema: z.ZodObject<{
     damagePre?: {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }[] | undefined;
     damagePost?: {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }[] | undefined;
 }, {
     from?: {
@@ -2774,10 +3007,34 @@ declare const MilburnContractDataSchema: z.ZodObject<{
     damagePre?: {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }[] | undefined;
     damagePost?: {
         description: string;
         item: string;
+        photos?: {
+            id: string;
+            createdAt: number;
+            storedPath: string;
+            localUri: string;
+            mime: "image/jpeg";
+            uploaded?: boolean | undefined;
+            remoteUrl?: string | undefined;
+            width?: number | undefined;
+            height?: number | undefined;
+            sizeBytes?: number | undefined;
+        }[] | undefined;
     }[] | undefined;
 }>;
 type MilburnContractData = z.infer<typeof MilburnContractDataSchema>;
@@ -3301,4 +3558,4 @@ declare const NotificationSchema: z.ZodObject<{
 }>;
 type NotificationItem = z.infer<typeof NotificationSchema>;
 
-export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };
+export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };

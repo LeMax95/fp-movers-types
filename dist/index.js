@@ -363,9 +363,22 @@ var CustomerInfoSchema = z18.object({
 
 // src/milburn/milburn-damage.ts
 import { z as z19 } from "zod";
+var DamagePhotoSchema = z19.object({
+  id: z19.string(),
+  storedPath: z19.string(),
+  localUri: z19.string(),
+  mime: z19.literal("image/jpeg"),
+  createdAt: z19.number(),
+  uploaded: z19.boolean().optional(),
+  remoteUrl: z19.string().optional(),
+  width: z19.number().optional(),
+  height: z19.number().optional(),
+  sizeBytes: z19.number().optional()
+});
 var DamageRowSchema = z19.object({
   item: z19.string(),
-  description: z19.string()
+  description: z19.string(),
+  photos: z19.array(DamagePhotoSchema).optional()
 });
 
 // src/milburn/milburn-contract-signatures.ts
@@ -658,6 +671,7 @@ export {
   CreateUserResponseSchema,
   CustomerInfoSchema,
   CustomerReleaseItemSchema,
+  DamagePhotoSchema,
   DamageRowSchema,
   DashboardKpiMetricSchema,
   DashboardKpisSchema,

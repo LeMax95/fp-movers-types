@@ -32,6 +32,7 @@ __export(src_exports, {
   CreateUserResponseSchema: () => CreateUserResponseSchema,
   CustomerInfoSchema: () => CustomerInfoSchema,
   CustomerReleaseItemSchema: () => CustomerReleaseItemSchema,
+  DamagePhotoSchema: () => DamagePhotoSchema,
   DamageRowSchema: () => DamageRowSchema,
   DashboardKpiMetricSchema: () => DashboardKpiMetricSchema,
   DashboardKpisSchema: () => DashboardKpisSchema,
@@ -440,9 +441,22 @@ var CustomerInfoSchema = import_zod18.z.object({
 
 // src/milburn/milburn-damage.ts
 var import_zod19 = require("zod");
+var DamagePhotoSchema = import_zod19.z.object({
+  id: import_zod19.z.string(),
+  storedPath: import_zod19.z.string(),
+  localUri: import_zod19.z.string(),
+  mime: import_zod19.z.literal("image/jpeg"),
+  createdAt: import_zod19.z.number(),
+  uploaded: import_zod19.z.boolean().optional(),
+  remoteUrl: import_zod19.z.string().optional(),
+  width: import_zod19.z.number().optional(),
+  height: import_zod19.z.number().optional(),
+  sizeBytes: import_zod19.z.number().optional()
+});
 var DamageRowSchema = import_zod19.z.object({
   item: import_zod19.z.string(),
-  description: import_zod19.z.string()
+  description: import_zod19.z.string(),
+  photos: import_zod19.z.array(DamagePhotoSchema).optional()
 });
 
 // src/milburn/milburn-contract-signatures.ts

@@ -121,7 +121,8 @@ var FieldJobUpdateSchema = z7.object({
   notes: z7.string().optional(),
   status: JobStatusEnum.optional(),
   summary: JobSummarySchema.optional(),
-  signatures: ScopedSignaturesSchema.optional()
+  signatures: ScopedSignaturesSchema.optional(),
+  stops: StopsSchema.optional()
 });
 
 // src/job/admin-job-response.ts

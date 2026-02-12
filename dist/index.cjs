@@ -198,7 +198,8 @@ var FieldJobUpdateSchema = import_zod7.z.object({
   notes: import_zod7.z.string().optional(),
   status: JobStatusEnum.optional(),
   summary: JobSummarySchema.optional(),
-  signatures: ScopedSignaturesSchema.optional()
+  signatures: ScopedSignaturesSchema.optional(),
+  stops: StopsSchema.optional()
 });
 
 // src/job/admin-job-response.ts

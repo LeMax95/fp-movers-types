@@ -872,6 +872,19 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;
     }>>;
+    stops: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        address: z.ZodString;
+        loading: z.ZodOptional<z.ZodBoolean>;
+        unloading: z.ZodOptional<z.ZodBoolean>;
+    }, "strip", z.ZodTypeAny, {
+        address: string;
+        loading?: boolean | undefined;
+        unloading?: boolean | undefined;
+    }, {
+        address: string;
+        loading?: boolean | undefined;
+        unloading?: boolean | undefined;
+    }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
     crew?: string[] | undefined;
@@ -880,6 +893,11 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;
     } | undefined;
+    stops?: {
+        address: string;
+        loading?: boolean | undefined;
+        unloading?: boolean | undefined;
+    }[] | undefined;
     summary?: {
         foremanId: string;
         duration: string;
@@ -918,6 +936,11 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;
     } | undefined;
+    stops?: {
+        address: string;
+        loading?: boolean | undefined;
+        unloading?: boolean | undefined;
+    }[] | undefined;
     summary?: {
         foremanId: string;
         duration: string;

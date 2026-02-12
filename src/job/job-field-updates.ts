@@ -10,6 +10,6 @@ export const FieldJobUpdateSchema = z.object({
   status: JobStatusEnum.optional(),
   summary: JobSummarySchema.optional(),
   signatures: ScopedSignaturesSchema.optional(),
-  stops: z.array(StopsSchema).optional(),
+  stops: StopsSchema.optional(),
 });
 export type FieldJobUpdate = z.infer<typeof FieldJobUpdateSchema>;

@@ -7,6 +7,8 @@ import { ValuationSchema } from "./milburn-valuation";
 import { CustomerInfoSchema } from "./milburn-customer-info";
 import { PackingMaterialRowSchema } from "./milburn-packing";
 import { DamageRowSchema } from "./milburn-damage";
+import { ReleaseRowSchema } from "./milburn-release";
+
 export const MilburnContractDataSchema = z.object({
   from: AddressBlockSchema.optional(),
   to: AddressBlockSchema.optional(),
@@ -22,6 +24,8 @@ export const MilburnContractDataSchema = z.object({
   materials: z.array(PackingMaterialRowSchema).optional(),
   damagePre: z.array(DamageRowSchema).optional(),
   damagePost: z.array(DamageRowSchema).optional(),
+  releaseRows: z.array(ReleaseRowSchema).optional(),
+
   paymentDetails: z.record(z.string()).optional(),
   summary: z.record(z.any()).optional()
 });

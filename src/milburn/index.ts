@@ -6,5 +6,6 @@ export * from "./milburn-valuation";
 export * from "./milburn-packing";
 export * from "./milburn-customer-info";
 export * from "./milburn-damage";
+export * from "./milburn-release";
 export * from "./milburn-contract-signatures";
 export * from "./milburn-contract-data";

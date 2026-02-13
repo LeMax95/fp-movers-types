@@ -62,6 +62,7 @@ __export(src_exports, {
   PRE_MOVE_CONTRACTS: () => PRE_MOVE_CONTRACTS,
   PackageMarketingSchema: () => PackageMarketingSchema,
   PackingMaterialRowSchema: () => PackingMaterialRowSchema,
+  ReleaseRowSchema: () => ReleaseRowSchema,
   RevenueBreakdownSchema: () => RevenueBreakdownSchema,
   ScopedSignaturesSchema: () => ScopedSignaturesSchema,
   SignatureScopeSchema: () => SignatureScopeSchema,
@@ -459,44 +460,53 @@ var DamageRowSchema = import_zod19.z.object({
   photos: import_zod19.z.array(DamagePhotoSchema).optional()
 });
 
-// src/milburn/milburn-contract-signatures.ts
+// src/milburn/milburn-release.ts
 var import_zod20 = require("zod");
-var ContractSignaturesConfigSchema = import_zod20.z.object({
-  signatures: import_zod20.z.array(
-    import_zod20.z.object({
-      key: import_zod20.z.string(),
-      label: import_zod20.z.string(),
-      required: import_zod20.z.boolean().optional(),
-      variant: import_zod20.z.enum(["inline", "stacked", "mark"]).optional()
+var ReleaseRowSchema = import_zod20.z.object({
+  item: import_zod20.z.string(),
+  number: import_zod20.z.string(),
+  reason: import_zod20.z.string()
+});
+
+// src/milburn/milburn-contract-signatures.ts
+var import_zod21 = require("zod");
+var ContractSignaturesConfigSchema = import_zod21.z.object({
+  signatures: import_zod21.z.array(
+    import_zod21.z.object({
+      key: import_zod21.z.string(),
+      label: import_zod21.z.string(),
+      required: import_zod21.z.boolean().optional(),
+      variant: import_zod21.z.enum(["inline", "stacked", "mark"]).optional()
     })
   ).optional(),
-  requiredSignatures: import_zod20.z.array(import_zod20.z.string()).optional(),
-  dualBatch: import_zod20.z.boolean().optional(),
-  dualBatchKeys: import_zod20.z.object({
-    pre: import_zod20.z.array(import_zod20.z.string()),
-    post: import_zod20.z.array(import_zod20.z.string())
+  requiredSignatures: import_zod21.z.array(import_zod21.z.string()).optional(),
+  dualBatch: import_zod21.z.boolean().optional(),
+  dualBatchKeys: import_zod21.z.object({
+    pre: import_zod21.z.array(import_zod21.z.string()),
+    post: import_zod21.z.array(import_zod21.z.string())
   }).optional()
 });
 
 // src/milburn/milburn-contract-data.ts
-var import_zod21 = require("zod");
-var MilburnContractDataSchema = import_zod21.z.object({
+var import_zod22 = require("zod");
+var MilburnContractDataSchema = import_zod22.z.object({
   from: AddressBlockSchema.optional(),
   to: AddressBlockSchema.optional(),
   meta: MilburnMetaSchema.optional(),
   delivery: DeliverySchema.optional(),
   storageHourly: StorageHourlySchema.optional(),
   valuation: ValuationSchema.optional(),
-  notice: import_zod21.z.object({
-    notToExceedAmount: import_zod21.z.string().optional(),
-    services: import_zod21.z.string().optional()
+  notice: import_zod22.z.object({
+    notToExceedAmount: import_zod22.z.string().optional(),
+    services: import_zod22.z.string().optional()
   }).optional(),
   customerInfo: CustomerInfoSchema.optional(),
-  materials: import_zod21.z.array(PackingMaterialRowSchema).optional(),
-  damagePre: import_zod21.z.array(DamageRowSchema).optional(),
-  damagePost: import_zod21.z.array(DamageRowSchema).optional(),
-  paymentDetails: import_zod21.z.record(import_zod21.z.string()).optional(),
-  summary: import_zod21.z.record(import_zod21.z.any()).optional()
+  materials: import_zod22.z.array(PackingMaterialRowSchema).optional(),
+  damagePre: import_zod22.z.array(DamageRowSchema).optional(),
+  damagePost: import_zod22.z.array(DamageRowSchema).optional(),
+  releaseRows: import_zod22.z.array(ReleaseRowSchema).optional(),
+  paymentDetails: import_zod22.z.record(import_zod22.z.string()).optional(),
+  summary: import_zod22.z.record(import_zod22.z.any()).optional()
 });
 
 // src/contracts/definitions/shared-contracts/preexistingDamage.ts
@@ -583,156 +593,156 @@ var POST_MOVE_CONTRACTS = [
 ];
 
 // src/user/user-core.ts
-var import_zod22 = require("zod");
-var UserRoleSchema = import_zod22.z.enum(["admin", "foreman"]);
-var UserCoreSchema = import_zod22.z.object({
-  id: import_zod22.z.string(),
-  email: import_zod22.z.string().email(),
-  name: import_zod22.z.string().nullable().optional(),
-  nickname: import_zod22.z.string().nullable().optional(),
-  phone: import_zod22.z.string().nullable().optional(),
+var import_zod23 = require("zod");
+var UserRoleSchema = import_zod23.z.enum(["admin", "foreman"]);
+var UserCoreSchema = import_zod23.z.object({
+  id: import_zod23.z.string(),
+  email: import_zod23.z.string().email(),
+  name: import_zod23.z.string().nullable().optional(),
+  nickname: import_zod23.z.string().nullable().optional(),
+  phone: import_zod23.z.string().nullable().optional(),
   role: UserRoleSchema,
-  isActive: import_zod22.z.boolean(),
-  createdAt: import_zod22.z.string(),
-  updatedAt: import_zod22.z.string()
+  isActive: import_zod23.z.boolean(),
+  createdAt: import_zod23.z.string(),
+  updatedAt: import_zod23.z.string()
 });
 
 // src/user/user-payloads.ts
-var import_zod23 = require("zod");
-var CreateUserPayloadSchema = import_zod23.z.object({
-  email: import_zod23.z.string().email(),
-  nickname: import_zod23.z.string().optional(),
-  name: import_zod23.z.string().optional(),
-  phone: import_zod23.z.string().optional(),
+var import_zod24 = require("zod");
+var CreateUserPayloadSchema = import_zod24.z.object({
+  email: import_zod24.z.string().email(),
+  nickname: import_zod24.z.string().optional(),
+  name: import_zod24.z.string().optional(),
+  phone: import_zod24.z.string().optional(),
   role: UserRoleSchema
 });
-var UpdateUserPayloadSchema = import_zod23.z.object({
-  name: import_zod23.z.string().optional(),
-  nickname: import_zod23.z.string().optional(),
-  phone: import_zod23.z.string().optional(),
+var UpdateUserPayloadSchema = import_zod24.z.object({
+  name: import_zod24.z.string().optional(),
+  nickname: import_zod24.z.string().optional(),
+  phone: import_zod24.z.string().optional(),
   role: UserRoleSchema.optional(),
-  isActive: import_zod23.z.boolean().optional()
+  isActive: import_zod24.z.boolean().optional()
 });
 
 // src/user/admin-user-response.ts
-var import_zod24 = require("zod");
-var AdminUserResponseSchema = import_zod24.z.object({
-  id: import_zod24.z.string(),
-  nickname: import_zod24.z.string().nullable().optional(),
-  email: import_zod24.z.string(),
-  name: import_zod24.z.string().nullable(),
-  phone: import_zod24.z.string().nullable(),
+var import_zod25 = require("zod");
+var AdminUserResponseSchema = import_zod25.z.object({
+  id: import_zod25.z.string(),
+  nickname: import_zod25.z.string().nullable().optional(),
+  email: import_zod25.z.string(),
+  name: import_zod25.z.string().nullable(),
+  phone: import_zod25.z.string().nullable(),
   role: UserRoleSchema,
-  isActive: import_zod24.z.boolean(),
-  createdAt: import_zod24.z.string(),
-  updatedAt: import_zod24.z.string(),
+  isActive: import_zod25.z.boolean(),
+  createdAt: import_zod25.z.string(),
+  updatedAt: import_zod25.z.string(),
   // Admin-only meta
-  jobCount: import_zod24.z.number().optional(),
-  lastActiveAt: import_zod24.z.string().nullable().optional(),
+  jobCount: import_zod25.z.number().optional(),
+  lastActiveAt: import_zod25.z.string().nullable().optional(),
   // Onboarding meta (computed on server)
-  onboardingPending: import_zod24.z.boolean().optional(),
-  onboardingExpired: import_zod24.z.boolean().optional()
+  onboardingPending: import_zod25.z.boolean().optional(),
+  onboardingExpired: import_zod25.z.boolean().optional()
 });
 
 // src/user/create-user-response.ts
-var import_zod25 = require("zod");
-var CreateUserResponseSchema = import_zod25.z.object({
+var import_zod26 = require("zod");
+var CreateUserResponseSchema = import_zod26.z.object({
   user: UserCoreSchema,
-  onboardingLink: import_zod25.z.string().url()
+  onboardingLink: import_zod26.z.string().url()
 });
 
 // src/auth/login-response.ts
-var import_zod26 = require("zod");
-var LoginResponseSchema = import_zod26.z.object({
-  token: import_zod26.z.string(),
+var import_zod27 = require("zod");
+var LoginResponseSchema = import_zod27.z.object({
+  token: import_zod27.z.string(),
   user: UserCoreSchema
 });
 
 // src/auth/login.ts
-var import_zod27 = require("zod");
-var LoginPayloadSchema = import_zod27.z.object({
-  identifier: import_zod27.z.string(),
-  password: import_zod27.z.string()
+var import_zod28 = require("zod");
+var LoginPayloadSchema = import_zod28.z.object({
+  identifier: import_zod28.z.string(),
+  password: import_zod28.z.string()
 });
 
 // src/auth/onboarding.ts
-var import_zod28 = require("zod");
-var OnboardingCompletePayloadSchema = import_zod28.z.object({
-  password: import_zod28.z.string().min(6, "Password must be at least 6 characters")
+var import_zod29 = require("zod");
+var OnboardingCompletePayloadSchema = import_zod29.z.object({
+  password: import_zod29.z.string().min(6, "Password must be at least 6 characters")
 });
 
 // src/dashboard/range.ts
-var import_zod29 = require("zod");
-var DashboardRangeSchema = import_zod29.z.object({
-  range: import_zod29.z.enum(["1m", "3m", "6m", "12m"]).default("1m")
+var import_zod30 = require("zod");
+var DashboardRangeSchema = import_zod30.z.object({
+  range: import_zod30.z.enum(["1m", "3m", "6m", "12m"]).default("1m")
 });
 
 // src/dashboard/stats.ts
-var import_zod30 = require("zod");
-var DashboardKpiMetricSchema = import_zod30.z.object({
-  value: import_zod30.z.number(),
+var import_zod31 = require("zod");
+var DashboardKpiMetricSchema = import_zod31.z.object({
+  value: import_zod31.z.number(),
   // current period
-  prevValue: import_zod30.z.number(),
+  prevValue: import_zod31.z.number(),
   // previous period
-  percent: import_zod30.z.number(),
+  percent: import_zod31.z.number(),
   // change in %
-  sparkline: import_zod30.z.array(import_zod30.z.number())
+  sparkline: import_zod31.z.array(import_zod31.z.number())
   // daily series
 });
-var DashboardKpisSchema = import_zod30.z.object({
+var DashboardKpisSchema = import_zod31.z.object({
   totalJobs: DashboardKpiMetricSchema,
   totalRevenue: DashboardKpiMetricSchema,
   extrasRevenue: DashboardKpiMetricSchema
 });
 
 // src/dashboard/status.ts
-var import_zod31 = require("zod");
-var JobsByStatusItemSchema = import_zod31.z.object({
+var import_zod32 = require("zod");
+var JobsByStatusItemSchema = import_zod32.z.object({
   status: JobStatusEnum,
-  count: import_zod31.z.number()
+  count: import_zod32.z.number()
 });
 
 // src/dashboard/revenue-breakdown.ts
-var import_zod32 = require("zod");
-var RevenueBreakdownSchema = import_zod32.z.object({
-  laborTotal: import_zod32.z.number(),
+var import_zod33 = require("zod");
+var RevenueBreakdownSchema = import_zod33.z.object({
+  laborTotal: import_zod33.z.number(),
   // sum of laborTotal
-  extrasTotal: import_zod32.z.number(),
+  extrasTotal: import_zod33.z.number(),
   // sum of extrasTotal
-  tipsTotal: import_zod32.z.number()
+  tipsTotal: import_zod33.z.number()
   // sum of tip
 });
 
 // src/dashboard/latest-jobs.ts
-var import_zod33 = require("zod");
-var LatestJobItemSchema = import_zod33.z.object({
-  id: import_zod33.z.string(),
-  client: import_zod33.z.string(),
-  createdAt: import_zod33.z.string(),
+var import_zod34 = require("zod");
+var LatestJobItemSchema = import_zod34.z.object({
+  id: import_zod34.z.string(),
+  client: import_zod34.z.string(),
+  createdAt: import_zod34.z.string(),
   status: JobStatusEnum,
-  summary: import_zod33.z.object({
-    totalPrice: import_zod33.z.number()
+  summary: import_zod34.z.object({
+    totalPrice: import_zod34.z.number()
   }).nullable().optional()
 });
 
 // src/dashboard/job-types.ts
-var import_zod34 = require("zod");
-var JobTypeBreakdownItemSchema = import_zod34.z.object({
-  label: import_zod34.z.string(),
+var import_zod35 = require("zod");
+var JobTypeBreakdownItemSchema = import_zod35.z.object({
+  label: import_zod35.z.string(),
   // e.g. "Apartment", "Office", "Unspecified"
-  count: import_zod34.z.number()
+  count: import_zod35.z.number()
   // number of jobs with that moveType
 });
-var JobTypeBreakdownSchema = import_zod34.z.array(JobTypeBreakdownItemSchema);
+var JobTypeBreakdownSchema = import_zod35.z.array(JobTypeBreakdownItemSchema);
 
 // src/notifications/notification.ts
-var import_zod35 = require("zod");
-var NotificationSchema = import_zod35.z.object({
-  id: import_zod35.z.string(),
-  userId: import_zod35.z.string(),
-  title: import_zod35.z.string(),
-  message: import_zod35.z.string().nullish(),
-  link: import_zod35.z.string().url().or(import_zod35.z.string().regex(/^\/.*/)).or(import_zod35.z.string().length(0)).or(import_zod35.z.null()).optional(),
-  createdAt: import_zod35.z.coerce.date(),
-  readAt: import_zod35.z.string().nullable()
+var import_zod36 = require("zod");
+var NotificationSchema = import_zod36.z.object({
+  id: import_zod36.z.string(),
+  userId: import_zod36.z.string(),
+  title: import_zod36.z.string(),
+  message: import_zod36.z.string().nullish(),
+  link: import_zod36.z.string().url().or(import_zod36.z.string().regex(/^\/.*/)).or(import_zod36.z.string().length(0)).or(import_zod36.z.null()).optional(),
+  createdAt: import_zod36.z.coerce.date(),
+  readAt: import_zod36.z.string().nullable()
 });

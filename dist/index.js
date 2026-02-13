@@ -381,44 +381,53 @@ var DamageRowSchema = z19.object({
   photos: z19.array(DamagePhotoSchema).optional()
 });
 
-// src/milburn/milburn-contract-signatures.ts
+// src/milburn/milburn-release.ts
 import { z as z20 } from "zod";
-var ContractSignaturesConfigSchema = z20.object({
-  signatures: z20.array(
-    z20.object({
-      key: z20.string(),
-      label: z20.string(),
-      required: z20.boolean().optional(),
-      variant: z20.enum(["inline", "stacked", "mark"]).optional()
+var ReleaseRowSchema = z20.object({
+  item: z20.string(),
+  number: z20.string(),
+  reason: z20.string()
+});
+
+// src/milburn/milburn-contract-signatures.ts
+import { z as z21 } from "zod";
+var ContractSignaturesConfigSchema = z21.object({
+  signatures: z21.array(
+    z21.object({
+      key: z21.string(),
+      label: z21.string(),
+      required: z21.boolean().optional(),
+      variant: z21.enum(["inline", "stacked", "mark"]).optional()
     })
   ).optional(),
-  requiredSignatures: z20.array(z20.string()).optional(),
-  dualBatch: z20.boolean().optional(),
-  dualBatchKeys: z20.object({
-    pre: z20.array(z20.string()),
-    post: z20.array(z20.string())
+  requiredSignatures: z21.array(z21.string()).optional(),
+  dualBatch: z21.boolean().optional(),
+  dualBatchKeys: z21.object({
+    pre: z21.array(z21.string()),
+    post: z21.array(z21.string())
   }).optional()
 });
 
 // src/milburn/milburn-contract-data.ts
-import { z as z21 } from "zod";
-var MilburnContractDataSchema = z21.object({
+import { z as z22 } from "zod";
+var MilburnContractDataSchema = z22.object({
   from: AddressBlockSchema.optional(),
   to: AddressBlockSchema.optional(),
   meta: MilburnMetaSchema.optional(),
   delivery: DeliverySchema.optional(),
   storageHourly: StorageHourlySchema.optional(),
   valuation: ValuationSchema.optional(),
-  notice: z21.object({
-    notToExceedAmount: z21.string().optional(),
-    services: z21.string().optional()
+  notice: z22.object({
+    notToExceedAmount: z22.string().optional(),
+    services: z22.string().optional()
   }).optional(),
   customerInfo: CustomerInfoSchema.optional(),
-  materials: z21.array(PackingMaterialRowSchema).optional(),
-  damagePre: z21.array(DamageRowSchema).optional(),
-  damagePost: z21.array(DamageRowSchema).optional(),
-  paymentDetails: z21.record(z21.string()).optional(),
-  summary: z21.record(z21.any()).optional()
+  materials: z22.array(PackingMaterialRowSchema).optional(),
+  damagePre: z22.array(DamageRowSchema).optional(),
+  damagePost: z22.array(DamageRowSchema).optional(),
+  releaseRows: z22.array(ReleaseRowSchema).optional(),
+  paymentDetails: z22.record(z22.string()).optional(),
+  summary: z22.record(z22.any()).optional()
 });
 
 // src/contracts/definitions/shared-contracts/preexistingDamage.ts
@@ -505,158 +514,158 @@ var POST_MOVE_CONTRACTS = [
 ];
 
 // src/user/user-core.ts
-import { z as z22 } from "zod";
-var UserRoleSchema = z22.enum(["admin", "foreman"]);
-var UserCoreSchema = z22.object({
-  id: z22.string(),
-  email: z22.string().email(),
-  name: z22.string().nullable().optional(),
-  nickname: z22.string().nullable().optional(),
-  phone: z22.string().nullable().optional(),
+import { z as z23 } from "zod";
+var UserRoleSchema = z23.enum(["admin", "foreman"]);
+var UserCoreSchema = z23.object({
+  id: z23.string(),
+  email: z23.string().email(),
+  name: z23.string().nullable().optional(),
+  nickname: z23.string().nullable().optional(),
+  phone: z23.string().nullable().optional(),
   role: UserRoleSchema,
-  isActive: z22.boolean(),
-  createdAt: z22.string(),
-  updatedAt: z22.string()
+  isActive: z23.boolean(),
+  createdAt: z23.string(),
+  updatedAt: z23.string()
 });
 
 // src/user/user-payloads.ts
-import { z as z23 } from "zod";
-var CreateUserPayloadSchema = z23.object({
-  email: z23.string().email(),
-  nickname: z23.string().optional(),
-  name: z23.string().optional(),
-  phone: z23.string().optional(),
+import { z as z24 } from "zod";
+var CreateUserPayloadSchema = z24.object({
+  email: z24.string().email(),
+  nickname: z24.string().optional(),
+  name: z24.string().optional(),
+  phone: z24.string().optional(),
   role: UserRoleSchema
 });
-var UpdateUserPayloadSchema = z23.object({
-  name: z23.string().optional(),
-  nickname: z23.string().optional(),
-  phone: z23.string().optional(),
+var UpdateUserPayloadSchema = z24.object({
+  name: z24.string().optional(),
+  nickname: z24.string().optional(),
+  phone: z24.string().optional(),
   role: UserRoleSchema.optional(),
-  isActive: z23.boolean().optional()
+  isActive: z24.boolean().optional()
 });
 
 // src/user/admin-user-response.ts
-import { z as z24 } from "zod";
-var AdminUserResponseSchema = z24.object({
-  id: z24.string(),
-  nickname: z24.string().nullable().optional(),
-  email: z24.string(),
-  name: z24.string().nullable(),
-  phone: z24.string().nullable(),
+import { z as z25 } from "zod";
+var AdminUserResponseSchema = z25.object({
+  id: z25.string(),
+  nickname: z25.string().nullable().optional(),
+  email: z25.string(),
+  name: z25.string().nullable(),
+  phone: z25.string().nullable(),
   role: UserRoleSchema,
-  isActive: z24.boolean(),
-  createdAt: z24.string(),
-  updatedAt: z24.string(),
+  isActive: z25.boolean(),
+  createdAt: z25.string(),
+  updatedAt: z25.string(),
   // Admin-only meta
-  jobCount: z24.number().optional(),
-  lastActiveAt: z24.string().nullable().optional(),
+  jobCount: z25.number().optional(),
+  lastActiveAt: z25.string().nullable().optional(),
   // Onboarding meta (computed on server)
-  onboardingPending: z24.boolean().optional(),
-  onboardingExpired: z24.boolean().optional()
+  onboardingPending: z25.boolean().optional(),
+  onboardingExpired: z25.boolean().optional()
 });
 
 // src/user/create-user-response.ts
-import { z as z25 } from "zod";
-var CreateUserResponseSchema = z25.object({
+import { z as z26 } from "zod";
+var CreateUserResponseSchema = z26.object({
   user: UserCoreSchema,
-  onboardingLink: z25.string().url()
+  onboardingLink: z26.string().url()
 });
 
 // src/auth/login-response.ts
-import { z as z26 } from "zod";
-var LoginResponseSchema = z26.object({
-  token: z26.string(),
+import { z as z27 } from "zod";
+var LoginResponseSchema = z27.object({
+  token: z27.string(),
   user: UserCoreSchema
 });
 
 // src/auth/login.ts
-import { z as z27 } from "zod";
-var LoginPayloadSchema = z27.object({
-  identifier: z27.string(),
-  password: z27.string()
+import { z as z28 } from "zod";
+var LoginPayloadSchema = z28.object({
+  identifier: z28.string(),
+  password: z28.string()
 });
 
 // src/auth/onboarding.ts
-import { z as z28 } from "zod";
-var OnboardingCompletePayloadSchema = z28.object({
-  password: z28.string().min(6, "Password must be at least 6 characters")
+import { z as z29 } from "zod";
+var OnboardingCompletePayloadSchema = z29.object({
+  password: z29.string().min(6, "Password must be at least 6 characters")
 });
 
 // src/dashboard/range.ts
-import { z as z29 } from "zod";
-var DashboardRangeSchema = z29.object({
-  range: z29.enum(["1m", "3m", "6m", "12m"]).default("1m")
+import { z as z30 } from "zod";
+var DashboardRangeSchema = z30.object({
+  range: z30.enum(["1m", "3m", "6m", "12m"]).default("1m")
 });
 
 // src/dashboard/stats.ts
-import { z as z30 } from "zod";
-var DashboardKpiMetricSchema = z30.object({
-  value: z30.number(),
+import { z as z31 } from "zod";
+var DashboardKpiMetricSchema = z31.object({
+  value: z31.number(),
   // current period
-  prevValue: z30.number(),
+  prevValue: z31.number(),
   // previous period
-  percent: z30.number(),
+  percent: z31.number(),
   // change in %
-  sparkline: z30.array(z30.number())
+  sparkline: z31.array(z31.number())
   // daily series
 });
-var DashboardKpisSchema = z30.object({
+var DashboardKpisSchema = z31.object({
   totalJobs: DashboardKpiMetricSchema,
   totalRevenue: DashboardKpiMetricSchema,
   extrasRevenue: DashboardKpiMetricSchema
 });
 
 // src/dashboard/status.ts
-import { z as z31 } from "zod";
-var JobsByStatusItemSchema = z31.object({
+import { z as z32 } from "zod";
+var JobsByStatusItemSchema = z32.object({
   status: JobStatusEnum,
-  count: z31.number()
+  count: z32.number()
 });
 
 // src/dashboard/revenue-breakdown.ts
-import { z as z32 } from "zod";
-var RevenueBreakdownSchema = z32.object({
-  laborTotal: z32.number(),
+import { z as z33 } from "zod";
+var RevenueBreakdownSchema = z33.object({
+  laborTotal: z33.number(),
   // sum of laborTotal
-  extrasTotal: z32.number(),
+  extrasTotal: z33.number(),
   // sum of extrasTotal
-  tipsTotal: z32.number()
+  tipsTotal: z33.number()
   // sum of tip
 });
 
 // src/dashboard/latest-jobs.ts
-import { z as z33 } from "zod";
-var LatestJobItemSchema = z33.object({
-  id: z33.string(),
-  client: z33.string(),
-  createdAt: z33.string(),
+import { z as z34 } from "zod";
+var LatestJobItemSchema = z34.object({
+  id: z34.string(),
+  client: z34.string(),
+  createdAt: z34.string(),
   status: JobStatusEnum,
-  summary: z33.object({
-    totalPrice: z33.number()
+  summary: z34.object({
+    totalPrice: z34.number()
   }).nullable().optional()
 });
 
 // src/dashboard/job-types.ts
-import { z as z34 } from "zod";
-var JobTypeBreakdownItemSchema = z34.object({
-  label: z34.string(),
+import { z as z35 } from "zod";
+var JobTypeBreakdownItemSchema = z35.object({
+  label: z35.string(),
   // e.g. "Apartment", "Office", "Unspecified"
-  count: z34.number()
+  count: z35.number()
   // number of jobs with that moveType
 });
-var JobTypeBreakdownSchema = z34.array(JobTypeBreakdownItemSchema);
+var JobTypeBreakdownSchema = z35.array(JobTypeBreakdownItemSchema);
 
 // src/notifications/notification.ts
-import { z as z35 } from "zod";
-var NotificationSchema = z35.object({
-  id: z35.string(),
-  userId: z35.string(),
-  title: z35.string(),
-  message: z35.string().nullish(),
-  link: z35.string().url().or(z35.string().regex(/^\/.*/)).or(z35.string().length(0)).or(z35.null()).optional(),
-  createdAt: z35.coerce.date(),
-  readAt: z35.string().nullable()
+import { z as z36 } from "zod";
+var NotificationSchema = z36.object({
+  id: z36.string(),
+  userId: z36.string(),
+  title: z36.string(),
+  message: z36.string().nullish(),
+  link: z36.string().url().or(z36.string().regex(/^\/.*/)).or(z36.string().length(0)).or(z36.null()).optional(),
+  createdAt: z36.coerce.date(),
+  readAt: z36.string().nullable()
 });
 export {
   AddressBlockSchema,
@@ -701,6 +710,7 @@ export {
   PRE_MOVE_CONTRACTS,
   PackageMarketingSchema,
   PackingMaterialRowSchema,
+  ReleaseRowSchema,
   RevenueBreakdownSchema,
   ScopedSignaturesSchema,
   SignatureScopeSchema,

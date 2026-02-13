@@ -2216,6 +2216,21 @@ declare const DamageRowSchema: z.ZodObject<{
 }>;
 type DamageRow = z.infer<typeof DamageRowSchema>;
 
+declare const ReleaseRowSchema: z.ZodObject<{
+    item: z.ZodString;
+    number: z.ZodString;
+    reason: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    number: string;
+    item: string;
+    reason: string;
+}, {
+    number: string;
+    item: string;
+    reason: string;
+}>;
+type ReleaseRow = z.infer<typeof ReleaseRowSchema>;
+
 /**
  * A single signature definition used in contract configs.
  * Describes what signatures should be collected.
@@ -2764,6 +2779,19 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }[] | undefined;
     }>, "many">>;
+    releaseRows: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        item: z.ZodString;
+        number: z.ZodString;
+        reason: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        number: string;
+        item: string;
+        reason: string;
+    }, {
+        number: string;
+        item: string;
+        reason: string;
+    }>, "many">>;
     paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     summary: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
 }, "strip", z.ZodTypeAny, {
@@ -2901,6 +2929,11 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }[] | undefined;
     }[] | undefined;
+    releaseRows?: {
+        number: string;
+        item: string;
+        reason: string;
+    }[] | undefined;
 }, {
     from?: {
         phone?: string | undefined;
@@ -3035,6 +3068,11 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             height?: number | undefined;
             sizeBytes?: number | undefined;
         }[] | undefined;
+    }[] | undefined;
+    releaseRows?: {
+        number: string;
+        item: string;
+        reason: string;
     }[] | undefined;
 }>;
 type MilburnContractData = z.infer<typeof MilburnContractDataSchema>;
@@ -3558,4 +3596,4 @@ declare const NotificationSchema: z.ZodObject<{
 }>;
 type NotificationItem = z.infer<typeof NotificationSchema>;
 
-export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };
+export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type ReleaseRow, ReleaseRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };

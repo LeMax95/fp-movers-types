@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ReleaseRowSchema } from "../milburn";
 
 export const StepSchema = z.object({
   index: z.number(),
@@ -40,6 +41,7 @@ export const JobSummarySchema = z.object({
 
   foremanId: z.string(),
   foremanName: z.string(),
+  releaseRows: z.array(ReleaseRowSchema).optional(),
 
  
 });

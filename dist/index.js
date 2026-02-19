@@ -45,69 +45,254 @@ var StopSchema = z2.object({
 var StopsSchema = z2.array(StopSchema);
 
 // src/job/job-summary.ts
+import { z as z14 } from "zod";
+
+// src/milburn/milburn-meta.ts
 import { z as z3 } from "zod";
-var StepSchema = z3.object({
-  index: z3.number(),
-  step: z3.object({
-    type: z3.string(),
-    stopId: z3.string().optional(),
-    address: z3.string().optional(),
-    fromAddress: z3.string().optional(),
-    toAddress: z3.string().optional(),
-    phase: z3.enum(["loading", "unloading", "driving"]).optional()
+var MilburnMetaSchema = z3.object({
+  orderDate: z3.string().optional(),
+  moveDate: z3.string().optional(),
+  packDate: z3.string().optional(),
+  delDate: z3.string().optional(),
+  takenBy: z3.string().optional(),
+  bookletDate: z3.string().optional(),
+  receivedPayment: z3.boolean().optional(),
+  reference: z3.string().optional(),
+  client: z3.string().optional()
+});
+
+// src/milburn/milburn-address.ts
+import { z as z4 } from "zod";
+var AddressBlockSchema = z4.object({
+  aptNo: z4.string().optional(),
+  phone: z4.string().optional(),
+  address: z4.string().optional()
+});
+
+// src/milburn/milburn-delivery.ts
+import { z as z5 } from "zod";
+var DeliverySchema = z5.object({
+  note: z5.string().optional(),
+  notify: z5.string().optional(),
+  address: z5.string().optional(),
+  phone: z5.string().optional(),
+  nameOf: z5.string().optional(),
+  billNotifyAddress: z5.string().optional(),
+  shipperCantFurnish: z5.boolean().optional()
+});
+
+// src/milburn/milburn-storage.ts
+import { z as z6 } from "zod";
+var StorageHourlySchema = z6.object({
+  storageType: z6.string().optional(),
+  nameOf: z6.string().optional(),
+  billNotifyAddress: z6.string().optional(),
+  firstDayRate: z6.string().optional(),
+  additionalDaysRate: z6.string().optional(),
+  warehouseHandlingRate: z6.string().optional(),
+  materials: z6.array(z6.array(z6.string())).optional(),
+  paymentTypes: z6.array(z6.string()).optional(),
+  stripeInputs: z6.array(z6.array(z6.string())).optional(),
+  packersData: z6.array(z6.array(z6.string())).optional(),
+  noOfPackers: z6.object({
+    count: z6.string().optional(),
+    origin: z6.boolean().optional(),
+    dest: z6.boolean().optional()
+  }).optional(),
+  issuance: z6.object({
+    waiveRequirement: z6.boolean().optional(),
+    shortNotice: z6.boolean().optional()
+  }).optional(),
+  articles: z6.object({
+    highValue: z6.boolean().optional(),
+    officeFixtures: z6.boolean().optional(),
+    householdGoods: z6.boolean().optional(),
+    adviceWeightCharges: z6.string().optional()
+  }).optional(),
+  hourlyRate: z6.record(z6.any()).optional(),
+  valuation: z6.record(z6.any()).optional(),
+  hundredweightRate: z6.record(z6.any()).optional(),
+  packers: z6.record(z6.any()).optional(),
+  packing: z6.record(z6.any()).optional(),
+  unpacking: z6.record(z6.any()).optional(),
+  pieceMoving: z6.record(z6.any()).optional(),
+  itemsOfValue: z6.array(z6.record(z6.any())).optional()
+});
+
+// src/milburn/milburn-valuation.ts
+import { z as z7 } from "zod";
+var ValuationSchema = z7.object({
+  choices: z7.array(z7.string()).optional(),
+  selectedOption: z7.string().optional(),
+  transportationRates: z7.array(z7.string()).optional(),
+  maxRates: z7.array(z7.string()).optional(),
+  storageRates: z7.array(z7.string()).optional(),
+  actualCashPerLb: z7.string().optional(),
+  fullValuePerLb: z7.string().optional(),
+  declaredValue: z7.string().optional()
+});
+
+// src/milburn/milburn-packing.ts
+import { z as z8 } from "zod";
+var PackingMaterialRowSchema = z8.object({
+  item: z8.string(),
+  perItem: z8.string(),
+  packing: z8.string(),
+  unpacking: z8.string(),
+  qty: z8.string(),
+  total: z8.string()
+});
+
+// src/milburn/milburn-customer-info.ts
+import { z as z9 } from "zod";
+var CustomerReleaseItemSchema = z9.object({
+  item: z9.string(),
+  reason: z9.string(),
+  initials: z9.string()
+});
+var CustomerInfoSchema = z9.object({
+  doubleDriveInitial: z9.string().optional(),
+  suppliesInitial: z9.string().optional(),
+  liabilityInitial: z9.string().optional(),
+  pressboardOption: z9.string().optional(),
+  parkingTicketInitial: z9.string().optional(),
+  printName: z9.string().optional(),
+  releaseItems: z9.array(CustomerReleaseItemSchema).optional()
+});
+
+// src/milburn/milburn-damage.ts
+import { z as z10 } from "zod";
+var DamagePhotoSchema = z10.object({
+  id: z10.string(),
+  storedPath: z10.string(),
+  localUri: z10.string(),
+  mime: z10.literal("image/jpeg"),
+  createdAt: z10.number(),
+  uploaded: z10.boolean().optional(),
+  remoteUrl: z10.string().optional(),
+  width: z10.number().optional(),
+  height: z10.number().optional(),
+  sizeBytes: z10.number().optional()
+});
+var DamageRowSchema = z10.object({
+  item: z10.string(),
+  description: z10.string(),
+  photos: z10.array(DamagePhotoSchema).optional()
+});
+
+// src/milburn/milburn-release.ts
+import { z as z11 } from "zod";
+var ReleaseRowSchema = z11.object({
+  item: z11.string().optional().default(""),
+  number: z11.string().optional().default(""),
+  reason: z11.string().optional().default("")
+});
+
+// src/milburn/milburn-contract-signatures.ts
+import { z as z12 } from "zod";
+var ContractSignaturesConfigSchema = z12.object({
+  signatures: z12.array(
+    z12.object({
+      key: z12.string(),
+      label: z12.string(),
+      required: z12.boolean().optional(),
+      variant: z12.enum(["inline", "stacked", "mark"]).optional()
+    })
+  ).optional(),
+  requiredSignatures: z12.array(z12.string()).optional(),
+  dualBatch: z12.boolean().optional(),
+  dualBatchKeys: z12.object({
+    pre: z12.array(z12.string()),
+    post: z12.array(z12.string())
+  }).optional()
+});
+
+// src/milburn/milburn-contract-data.ts
+import { z as z13 } from "zod";
+var MilburnContractDataSchema = z13.object({
+  from: AddressBlockSchema.optional(),
+  to: AddressBlockSchema.optional(),
+  meta: MilburnMetaSchema.optional(),
+  delivery: DeliverySchema.optional(),
+  storageHourly: StorageHourlySchema.optional(),
+  valuation: ValuationSchema.optional(),
+  notice: z13.object({
+    notToExceedAmount: z13.string().optional(),
+    services: z13.string().optional()
+  }).optional(),
+  customerInfo: CustomerInfoSchema.optional(),
+  materials: z13.array(PackingMaterialRowSchema).optional(),
+  damagePre: z13.array(DamageRowSchema).optional(),
+  damagePost: z13.array(DamageRowSchema).optional(),
+  releaseRows: z13.array(ReleaseRowSchema).optional(),
+  paymentDetails: z13.record(z13.string()).optional(),
+  summary: z13.record(z13.any()).optional()
+});
+
+// src/job/job-summary.ts
+var StepSchema = z14.object({
+  index: z14.number(),
+  step: z14.object({
+    type: z14.string(),
+    stopId: z14.string().optional(),
+    address: z14.string().optional(),
+    fromAddress: z14.string().optional(),
+    toAddress: z14.string().optional(),
+    phase: z14.enum(["loading", "unloading", "driving"]).optional()
   }),
-  duration: z3.number()
+  duration: z14.number()
 });
-var ExtraItemSchema = z3.object({
-  label: z3.string(),
-  quantity: z3.number(),
-  price: z3.number(),
-  unit: z3.string().optional()
+var ExtraItemSchema = z14.object({
+  label: z14.string(),
+  quantity: z14.number(),
+  price: z14.number(),
+  unit: z14.string().optional()
 });
-var JobSummarySchema = z3.object({
-  steps: z3.array(StepSchema),
-  duration: z3.string(),
-  billableHours: z3.number(),
-  laborTotal: z3.number(),
-  extras: z3.array(ExtraItemSchema),
-  extrasTotal: z3.number(),
-  tip: z3.number(),
-  grandTotal: z3.number(),
-  paymentMethod: z3.enum(["Cash", "Credit Card", "PayPal"]),
-  paymentDetails: z3.record(z3.string()).optional(),
-  foremanId: z3.string(),
-  foremanName: z3.string()
+var JobSummarySchema = z14.object({
+  steps: z14.array(StepSchema),
+  duration: z14.string(),
+  billableHours: z14.number(),
+  laborTotal: z14.number(),
+  extras: z14.array(ExtraItemSchema),
+  extrasTotal: z14.number(),
+  tip: z14.number(),
+  grandTotal: z14.number(),
+  paymentMethod: z14.enum(["Cash", "Credit Card", "PayPal"]),
+  paymentDetails: z14.record(z14.string()).optional(),
+  foremanId: z14.string(),
+  foremanName: z14.string(),
+  releaseRows: z14.array(ReleaseRowSchema).optional()
 });
 
 // src/job/job-contracts.ts
-import { z as z4 } from "zod";
-var JobContractsSchema = z4.object({
-  data: z4.record(z4.unknown()).optional(),
-  signatures: z4.object({
-    pre: z4.record(
-      z4.record(
-        z4.string().nullable().optional()
+import { z as z15 } from "zod";
+var JobContractsSchema = z15.object({
+  data: z15.record(z15.unknown()).optional(),
+  signatures: z15.object({
+    pre: z15.record(
+      z15.record(
+        z15.string().nullable().optional()
       ).optional()
     ).optional(),
-    post: z4.record(
-      z4.record(
-        z4.string().nullable().optional()
+    post: z15.record(
+      z15.record(
+        z15.string().nullable().optional()
       ).optional()
     ).optional()
   }).optional()
 });
 
 // src/job/job-signatures.ts
-import { z as z5 } from "zod";
-var SignatureScopeSchema = z5.record(z5.record(z5.string().nullable()));
-var ScopedSignaturesSchema = z5.object({
+import { z as z16 } from "zod";
+var SignatureScopeSchema = z16.record(z16.record(z16.string().nullable()));
+var ScopedSignaturesSchema = z16.object({
   pre: SignatureScopeSchema,
   post: SignatureScopeSchema
 });
 
 // src/job/job-payloads.ts
-import { z as z6 } from "zod";
-var CreateJobPayloadSchema = z6.object({
+import { z as z17 } from "zod";
+var CreateJobPayloadSchema = z17.object({
   job: JobCoreSchema,
   stops: StopsSchema,
   contracts: JobContractsSchema,
@@ -115,10 +300,10 @@ var CreateJobPayloadSchema = z6.object({
 });
 
 // src/job/job-field-updates.ts
-import { z as z7 } from "zod";
-var FieldJobUpdateSchema = z7.object({
-  crew: z7.array(z7.string()).optional(),
-  notes: z7.string().optional(),
+import { z as z18 } from "zod";
+var FieldJobUpdateSchema = z18.object({
+  crew: z18.array(z18.string()).optional(),
+  notes: z18.string().optional(),
   status: JobStatusEnum.optional(),
   summary: JobSummarySchema.optional(),
   signatures: ScopedSignaturesSchema.optional(),
@@ -126,308 +311,126 @@ var FieldJobUpdateSchema = z7.object({
 });
 
 // src/job/admin-job-response.ts
-import { z as z8 } from "zod";
-var AdminJobStopSchema = z8.object({
-  id: z8.number(),
-  address: z8.string(),
-  loading: z8.boolean(),
-  unloading: z8.boolean()
+import { z as z19 } from "zod";
+var AdminJobStopSchema = z19.object({
+  id: z19.number(),
+  address: z19.string(),
+  loading: z19.boolean(),
+  unloading: z19.boolean()
 });
-var AdminContractKeySchema = z8.string();
-var AdminContractListSchema = z8.array(AdminContractKeySchema);
-var AdminJobResponseSchema = z8.object({
-  id: z8.string(),
-  client: z8.string(),
-  phone: z8.string().nullable(),
-  email: z8.string().nullable(),
-  foremanId: z8.string().nullable().optional(),
-  foremanName: z8.string().nullable().optional(),
-  moveDate: z8.string(),
-  moveTime: z8.string().nullable(),
-  reference: z8.string().nullable(),
-  fromAddress: z8.string(),
-  toAddress: z8.string(),
-  truckCount: z8.number(),
-  crew: z8.array(z8.string()),
-  notes: z8.string().nullable(),
-  volume: z8.string().nullable().optional(),
-  moveType: z8.string().nullable().optional(),
-  distance: z8.string().nullable().optional(),
-  rate: z8.string().nullable().optional(),
-  minimum: z8.string().nullable().optional(),
-  gasFee: z8.string().nullable().optional(),
+var AdminContractKeySchema = z19.string();
+var AdminContractListSchema = z19.array(AdminContractKeySchema);
+var AdminJobResponseSchema = z19.object({
+  id: z19.string(),
+  client: z19.string(),
+  phone: z19.string().nullable(),
+  email: z19.string().nullable(),
+  foremanId: z19.string().nullable().optional(),
+  foremanName: z19.string().nullable().optional(),
+  moveDate: z19.string(),
+  moveTime: z19.string().nullable(),
+  reference: z19.string().nullable(),
+  fromAddress: z19.string(),
+  toAddress: z19.string(),
+  truckCount: z19.number(),
+  crew: z19.array(z19.string()),
+  notes: z19.string().nullable(),
+  volume: z19.string().nullable().optional(),
+  moveType: z19.string().nullable().optional(),
+  distance: z19.string().nullable().optional(),
+  rate: z19.string().nullable().optional(),
+  minimum: z19.string().nullable().optional(),
+  gasFee: z19.string().nullable().optional(),
   // 👇 add this
-  packageId: z8.number().nullable().optional(),
-  status: z8.string(),
-  createdAt: z8.string(),
-  updatedAt: z8.string(),
-  stops: z8.array(AdminJobStopSchema),
-  summary: z8.object({
+  packageId: z19.number().nullable().optional(),
+  status: z19.string(),
+  createdAt: z19.string(),
+  updatedAt: z19.string(),
+  stops: z19.array(AdminJobStopSchema),
+  summary: z19.object({
     data: JobSummarySchema
   }).nullable(),
   contracts: AdminContractListSchema
 });
 
 // src/job/jobSettings/JobSettings.ts
-import { z as z9 } from "zod";
-var JobSettingsSchema = z9.object({
+import { z as z20 } from "zod";
+var JobSettingsSchema = z20.object({
   // ------- Job Defaults -------
-  defaultHourlyRate: z9.number().nullable().optional(),
-  defaultMinHours: z9.number().nullable().optional(),
-  defaultCrewSize: z9.number().nullable().optional(),
-  defaultTruckCount: z9.number().nullable().optional(),
-  defaultGasFee: z9.number().nullable().optional(),
-  defaultPerMileRate: z9.number().nullable().optional(),
-  defaultTollFee: z9.number().nullable().optional(),
+  defaultHourlyRate: z20.number().nullable().optional(),
+  defaultMinHours: z20.number().nullable().optional(),
+  defaultCrewSize: z20.number().nullable().optional(),
+  defaultTruckCount: z20.number().nullable().optional(),
+  defaultGasFee: z20.number().nullable().optional(),
+  defaultPerMileRate: z20.number().nullable().optional(),
+  defaultTollFee: z20.number().nullable().optional(),
   // ------- Extras -------
-  extras: z9.array(
+  extras: z20.array(
     ExtraItemSchema.extend({
-      quantity: z9.number().default(0)
+      quantity: z20.number().default(0)
     })
   ).nullable().optional(),
   // ------- Packing / Materials -------
-  packingRate: z9.number().nullable().optional(),
-  unpackingRate: z9.number().nullable().optional(),
-  materialsMarkupPct: z9.number().nullable().optional(),
+  packingRate: z20.number().nullable().optional(),
+  unpackingRate: z20.number().nullable().optional(),
+  materialsMarkupPct: z20.number().nullable().optional(),
   // ------- Storage -------
-  storageFirstDayRate: z9.number().nullable().optional(),
-  storageAdditionalDayRate: z9.number().nullable().optional(),
-  storageHandlingRate: z9.number().nullable().optional(),
+  storageFirstDayRate: z20.number().nullable().optional(),
+  storageAdditionalDayRate: z20.number().nullable().optional(),
+  storageHandlingRate: z20.number().nullable().optional(),
   // ------- Valuation -------
-  valuationActualCashPerLb: z9.number().nullable().optional(),
-  valuationFullValuePerLb: z9.number().nullable().optional(),
+  valuationActualCashPerLb: z20.number().nullable().optional(),
+  valuationFullValuePerLb: z20.number().nullable().optional(),
   // ------- Fuel / Truck Fees -------
-  fuelBaseFee: z9.number().nullable().optional(),
-  fuelPerMileRate: z9.number().nullable().optional(),
-  truckFeePerTruck: z9.number().nullable().optional()
+  fuelBaseFee: z20.number().nullable().optional(),
+  fuelPerMileRate: z20.number().nullable().optional(),
+  truckFeePerTruck: z20.number().nullable().optional()
 });
 
 // src/job/jobSettings/JobPackage.ts
-import { z as z10 } from "zod";
-var PackageMarketingSchema = z10.object({
-  description: z10.string().optional(),
-  notes: z10.string().optional(),
-  finePrint: z10.string().optional()
+import { z as z21 } from "zod";
+var PackageMarketingSchema = z21.object({
+  description: z21.string().optional(),
+  notes: z21.string().optional(),
+  finePrint: z21.string().optional()
 }).optional();
-var JobPackageSchema = z10.object({
-  id: z10.number(),
-  name: z10.string(),
-  shortName: z10.string().nullable().optional(),
-  category: z10.string().nullable().optional(),
-  moverCount: z10.number(),
-  truckCount: z10.number(),
-  hourlyRate: z10.number(),
-  minHours: z10.number(),
-  flatFee: z10.number().nullable().optional(),
-  overtimeRate: z10.number().nullable().optional(),
-  includesGasFee: z10.boolean().default(true),
-  includesMileage: z10.boolean().default(true),
-  includesTolls: z10.boolean().default(false),
-  includesTaxes: z10.boolean().default(true),
-  includesTruckFee: z10.boolean().default(true),
-  includesPackingMaterials: z10.boolean().default(false),
-  includesDisassembly: z10.boolean().default(false),
-  includesReassembly: z10.boolean().default(false),
-  includesFloorProtection: z10.boolean().default(false),
-  includesWrapping: z10.boolean().default(false),
-  includesBasicInsurance: z10.boolean().default(true),
-  overrideGasFee: z10.number().nullable().optional(),
-  overridePerMileRate: z10.number().nullable().optional(),
-  overridePackingRate: z10.number().nullable().optional(),
-  overrideUnpackingRate: z10.number().nullable().optional(),
-  defaultCrewNames: z10.array(z10.string()).default([]),
-  marketing: z10.any().optional(),
-  isActive: z10.boolean().default(true)
+var JobPackageSchema = z21.object({
+  id: z21.number(),
+  name: z21.string(),
+  shortName: z21.string().nullable().optional(),
+  category: z21.string().nullable().optional(),
+  moverCount: z21.number(),
+  truckCount: z21.number(),
+  hourlyRate: z21.number(),
+  minHours: z21.number(),
+  flatFee: z21.number().nullable().optional(),
+  overtimeRate: z21.number().nullable().optional(),
+  includesGasFee: z21.boolean().default(true),
+  includesMileage: z21.boolean().default(true),
+  includesTolls: z21.boolean().default(false),
+  includesTaxes: z21.boolean().default(true),
+  includesTruckFee: z21.boolean().default(true),
+  includesPackingMaterials: z21.boolean().default(false),
+  includesDisassembly: z21.boolean().default(false),
+  includesReassembly: z21.boolean().default(false),
+  includesFloorProtection: z21.boolean().default(false),
+  includesWrapping: z21.boolean().default(false),
+  includesBasicInsurance: z21.boolean().default(true),
+  overrideGasFee: z21.number().nullable().optional(),
+  overridePerMileRate: z21.number().nullable().optional(),
+  overridePackingRate: z21.number().nullable().optional(),
+  overrideUnpackingRate: z21.number().nullable().optional(),
+  defaultCrewNames: z21.array(z21.string()).default([]),
+  marketing: z21.any().optional(),
+  isActive: z21.boolean().default(true)
 });
 var JobPackageCreateSchema = JobPackageSchema.omit({ id: true });
 
 // src/job/job-partial-update.ts
-import { z as z11 } from "zod";
-var JobPartialUpdateSchema = z11.object({
+import { z as z22 } from "zod";
+var JobPartialUpdateSchema = z22.object({
   job: JobCoreSchema.partial(),
   stops: StopsSchema.optional()
-});
-
-// src/milburn/milburn-meta.ts
-import { z as z12 } from "zod";
-var MilburnMetaSchema = z12.object({
-  orderDate: z12.string().optional(),
-  moveDate: z12.string().optional(),
-  packDate: z12.string().optional(),
-  delDate: z12.string().optional(),
-  takenBy: z12.string().optional(),
-  bookletDate: z12.string().optional(),
-  receivedPayment: z12.boolean().optional(),
-  reference: z12.string().optional(),
-  client: z12.string().optional()
-});
-
-// src/milburn/milburn-address.ts
-import { z as z13 } from "zod";
-var AddressBlockSchema = z13.object({
-  aptNo: z13.string().optional(),
-  phone: z13.string().optional(),
-  address: z13.string().optional()
-});
-
-// src/milburn/milburn-delivery.ts
-import { z as z14 } from "zod";
-var DeliverySchema = z14.object({
-  note: z14.string().optional(),
-  notify: z14.string().optional(),
-  address: z14.string().optional(),
-  phone: z14.string().optional(),
-  nameOf: z14.string().optional(),
-  billNotifyAddress: z14.string().optional(),
-  shipperCantFurnish: z14.boolean().optional()
-});
-
-// src/milburn/milburn-storage.ts
-import { z as z15 } from "zod";
-var StorageHourlySchema = z15.object({
-  storageType: z15.string().optional(),
-  nameOf: z15.string().optional(),
-  billNotifyAddress: z15.string().optional(),
-  firstDayRate: z15.string().optional(),
-  additionalDaysRate: z15.string().optional(),
-  warehouseHandlingRate: z15.string().optional(),
-  materials: z15.array(z15.array(z15.string())).optional(),
-  paymentTypes: z15.array(z15.string()).optional(),
-  stripeInputs: z15.array(z15.array(z15.string())).optional(),
-  packersData: z15.array(z15.array(z15.string())).optional(),
-  noOfPackers: z15.object({
-    count: z15.string().optional(),
-    origin: z15.boolean().optional(),
-    dest: z15.boolean().optional()
-  }).optional(),
-  issuance: z15.object({
-    waiveRequirement: z15.boolean().optional(),
-    shortNotice: z15.boolean().optional()
-  }).optional(),
-  articles: z15.object({
-    highValue: z15.boolean().optional(),
-    officeFixtures: z15.boolean().optional(),
-    householdGoods: z15.boolean().optional(),
-    adviceWeightCharges: z15.string().optional()
-  }).optional(),
-  hourlyRate: z15.record(z15.any()).optional(),
-  valuation: z15.record(z15.any()).optional(),
-  hundredweightRate: z15.record(z15.any()).optional(),
-  packers: z15.record(z15.any()).optional(),
-  packing: z15.record(z15.any()).optional(),
-  unpacking: z15.record(z15.any()).optional(),
-  pieceMoving: z15.record(z15.any()).optional(),
-  itemsOfValue: z15.array(z15.record(z15.any())).optional()
-});
-
-// src/milburn/milburn-valuation.ts
-import { z as z16 } from "zod";
-var ValuationSchema = z16.object({
-  choices: z16.array(z16.string()).optional(),
-  selectedOption: z16.string().optional(),
-  transportationRates: z16.array(z16.string()).optional(),
-  maxRates: z16.array(z16.string()).optional(),
-  storageRates: z16.array(z16.string()).optional(),
-  actualCashPerLb: z16.string().optional(),
-  fullValuePerLb: z16.string().optional(),
-  declaredValue: z16.string().optional()
-});
-
-// src/milburn/milburn-packing.ts
-import { z as z17 } from "zod";
-var PackingMaterialRowSchema = z17.object({
-  item: z17.string(),
-  perItem: z17.string(),
-  packing: z17.string(),
-  unpacking: z17.string(),
-  qty: z17.string(),
-  total: z17.string()
-});
-
-// src/milburn/milburn-customer-info.ts
-import { z as z18 } from "zod";
-var CustomerReleaseItemSchema = z18.object({
-  item: z18.string(),
-  reason: z18.string(),
-  initials: z18.string()
-});
-var CustomerInfoSchema = z18.object({
-  doubleDriveInitial: z18.string().optional(),
-  suppliesInitial: z18.string().optional(),
-  liabilityInitial: z18.string().optional(),
-  pressboardOption: z18.string().optional(),
-  parkingTicketInitial: z18.string().optional(),
-  printName: z18.string().optional(),
-  releaseItems: z18.array(CustomerReleaseItemSchema).optional()
-});
-
-// src/milburn/milburn-damage.ts
-import { z as z19 } from "zod";
-var DamagePhotoSchema = z19.object({
-  id: z19.string(),
-  storedPath: z19.string(),
-  localUri: z19.string(),
-  mime: z19.literal("image/jpeg"),
-  createdAt: z19.number(),
-  uploaded: z19.boolean().optional(),
-  remoteUrl: z19.string().optional(),
-  width: z19.number().optional(),
-  height: z19.number().optional(),
-  sizeBytes: z19.number().optional()
-});
-var DamageRowSchema = z19.object({
-  item: z19.string(),
-  description: z19.string(),
-  photos: z19.array(DamagePhotoSchema).optional()
-});
-
-// src/milburn/milburn-release.ts
-import { z as z20 } from "zod";
-var ReleaseRowSchema = z20.object({
-  item: z20.string(),
-  number: z20.string(),
-  reason: z20.string()
-});
-
-// src/milburn/milburn-contract-signatures.ts
-import { z as z21 } from "zod";
-var ContractSignaturesConfigSchema = z21.object({
-  signatures: z21.array(
-    z21.object({
-      key: z21.string(),
-      label: z21.string(),
-      required: z21.boolean().optional(),
-      variant: z21.enum(["inline", "stacked", "mark"]).optional()
-    })
-  ).optional(),
-  requiredSignatures: z21.array(z21.string()).optional(),
-  dualBatch: z21.boolean().optional(),
-  dualBatchKeys: z21.object({
-    pre: z21.array(z21.string()),
-    post: z21.array(z21.string())
-  }).optional()
-});
-
-// src/milburn/milburn-contract-data.ts
-import { z as z22 } from "zod";
-var MilburnContractDataSchema = z22.object({
-  from: AddressBlockSchema.optional(),
-  to: AddressBlockSchema.optional(),
-  meta: MilburnMetaSchema.optional(),
-  delivery: DeliverySchema.optional(),
-  storageHourly: StorageHourlySchema.optional(),
-  valuation: ValuationSchema.optional(),
-  notice: z22.object({
-    notToExceedAmount: z22.string().optional(),
-    services: z22.string().optional()
-  }).optional(),
-  customerInfo: CustomerInfoSchema.optional(),
-  materials: z22.array(PackingMaterialRowSchema).optional(),
-  damagePre: z22.array(DamageRowSchema).optional(),
-  damagePost: z22.array(DamageRowSchema).optional(),
-  releaseRows: z22.array(ReleaseRowSchema).optional(),
-  paymentDetails: z22.record(z22.string()).optional(),
-  summary: z22.record(z22.any()).optional()
 });
 
 // src/contracts/definitions/shared-contracts/preexistingDamage.ts

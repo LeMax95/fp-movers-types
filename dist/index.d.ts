@@ -241,6 +241,19 @@ declare const JobSummarySchema: z.ZodObject<{
     paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     foremanId: z.ZodString;
     foremanName: z.ZodString;
+    releaseRows: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        item: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        number: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        reason: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+    }, "strip", z.ZodTypeAny, {
+        number: string;
+        item: string;
+        reason: string;
+    }, {
+        number?: string | undefined;
+        item?: string | undefined;
+        reason?: string | undefined;
+    }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     foremanId: string;
     duration: string;
@@ -269,6 +282,11 @@ declare const JobSummarySchema: z.ZodObject<{
     grandTotal: number;
     paymentMethod: "Cash" | "Credit Card" | "PayPal";
     foremanName: string;
+    releaseRows?: {
+        number: string;
+        item: string;
+        reason: string;
+    }[] | undefined;
     paymentDetails?: Record<string, string> | undefined;
 }, {
     foremanId: string;
@@ -298,6 +316,11 @@ declare const JobSummarySchema: z.ZodObject<{
     grandTotal: number;
     paymentMethod: "Cash" | "Credit Card" | "PayPal";
     foremanName: string;
+    releaseRows?: {
+        number?: string | undefined;
+        item?: string | undefined;
+        reason?: string | undefined;
+    }[] | undefined;
     paymentDetails?: Record<string, string> | undefined;
 }>;
 type JobSummary = z.infer<typeof JobSummarySchema>;
@@ -317,17 +340,17 @@ declare const JobContractsSchema: z.ZodObject<{
         post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
     }>>;
 }, "strip", z.ZodTypeAny, {
-    data?: Record<string, unknown> | undefined;
     signatures?: {
         pre?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
     } | undefined;
+    data?: Record<string, unknown> | undefined;
 }, {
-    data?: Record<string, unknown> | undefined;
     signatures?: {
         pre?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
     } | undefined;
+    data?: Record<string, unknown> | undefined;
 }>;
 type JobContracts = z.infer<typeof JobContractsSchema>;
 
@@ -441,17 +464,17 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
             post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         }>>;
     }, "strip", z.ZodTypeAny, {
-        data?: Record<string, unknown> | undefined;
         signatures?: {
             pre?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
             post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         } | undefined;
+        data?: Record<string, unknown> | undefined;
     }, {
-        data?: Record<string, unknown> | undefined;
         signatures?: {
             pre?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
             post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         } | undefined;
+        data?: Record<string, unknown> | undefined;
     }>;
     summary: z.ZodOptional<z.ZodObject<{
         steps: z.ZodArray<z.ZodObject<{
@@ -528,6 +551,19 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
         foremanId: z.ZodString;
         foremanName: z.ZodString;
+        releaseRows: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            item: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+            number: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+            reason: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        }, "strip", z.ZodTypeAny, {
+            number: string;
+            item: string;
+            reason: string;
+        }, {
+            number?: string | undefined;
+            item?: string | undefined;
+            reason?: string | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         foremanId: string;
         duration: string;
@@ -556,6 +592,11 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number: string;
+            item: string;
+            reason: string;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     }, {
         foremanId: string;
@@ -585,6 +626,11 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number?: string | undefined;
+            item?: string | undefined;
+            reason?: string | undefined;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     }>>;
 }, "strip", z.ZodTypeAny, {
@@ -618,11 +664,11 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         unloading?: boolean | undefined;
     }[];
     contracts: {
-        data?: Record<string, unknown> | undefined;
         signatures?: {
             pre?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
             post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         } | undefined;
+        data?: Record<string, unknown> | undefined;
     };
     summary?: {
         foremanId: string;
@@ -652,6 +698,11 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number: string;
+            item: string;
+            reason: string;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     } | undefined;
 }, {
@@ -685,11 +736,11 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         unloading?: boolean | undefined;
     }[];
     contracts: {
-        data?: Record<string, unknown> | undefined;
         signatures?: {
             pre?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
             post?: Record<string, Record<string, string | null | undefined> | undefined> | undefined;
         } | undefined;
+        data?: Record<string, unknown> | undefined;
     };
     summary?: {
         foremanId: string;
@@ -719,6 +770,11 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number?: string | undefined;
+            item?: string | undefined;
+            reason?: string | undefined;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     } | undefined;
 }>;
@@ -803,6 +859,19 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
         foremanId: z.ZodString;
         foremanName: z.ZodString;
+        releaseRows: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            item: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+            number: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+            reason: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        }, "strip", z.ZodTypeAny, {
+            number: string;
+            item: string;
+            reason: string;
+        }, {
+            number?: string | undefined;
+            item?: string | undefined;
+            reason?: string | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         foremanId: string;
         duration: string;
@@ -831,6 +900,11 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number: string;
+            item: string;
+            reason: string;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     }, {
         foremanId: string;
@@ -860,6 +934,11 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number?: string | undefined;
+            item?: string | undefined;
+            reason?: string | undefined;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     }>>;
     signatures: z.ZodOptional<z.ZodObject<{
@@ -893,11 +972,6 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;
     } | undefined;
-    stops?: {
-        address: string;
-        loading?: boolean | undefined;
-        unloading?: boolean | undefined;
-    }[] | undefined;
     summary?: {
         foremanId: string;
         duration: string;
@@ -926,8 +1000,18 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number: string;
+            item: string;
+            reason: string;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     } | undefined;
+    stops?: {
+        address: string;
+        loading?: boolean | undefined;
+        unloading?: boolean | undefined;
+    }[] | undefined;
 }, {
     status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
     crew?: string[] | undefined;
@@ -936,11 +1020,6 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;
     } | undefined;
-    stops?: {
-        address: string;
-        loading?: boolean | undefined;
-        unloading?: boolean | undefined;
-    }[] | undefined;
     summary?: {
         foremanId: string;
         duration: string;
@@ -969,8 +1048,18 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
         grandTotal: number;
         paymentMethod: "Cash" | "Credit Card" | "PayPal";
         foremanName: string;
+        releaseRows?: {
+            number?: string | undefined;
+            item?: string | undefined;
+            reason?: string | undefined;
+        }[] | undefined;
         paymentDetails?: Record<string, string> | undefined;
     } | undefined;
+    stops?: {
+        address: string;
+        loading?: boolean | undefined;
+        unloading?: boolean | undefined;
+    }[] | undefined;
 }>;
 type FieldJobUpdate = z.infer<typeof FieldJobUpdateSchema>;
 
@@ -1109,6 +1198,19 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
             foremanId: z.ZodString;
             foremanName: z.ZodString;
+            releaseRows: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                item: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+                number: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+                reason: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+            }, "strip", z.ZodTypeAny, {
+                number: string;
+                item: string;
+                reason: string;
+            }, {
+                number?: string | undefined;
+                item?: string | undefined;
+                reason?: string | undefined;
+            }>, "many">>;
         }, "strip", z.ZodTypeAny, {
             foremanId: string;
             duration: string;
@@ -1137,6 +1239,11 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             grandTotal: number;
             paymentMethod: "Cash" | "Credit Card" | "PayPal";
             foremanName: string;
+            releaseRows?: {
+                number: string;
+                item: string;
+                reason: string;
+            }[] | undefined;
             paymentDetails?: Record<string, string> | undefined;
         }, {
             foremanId: string;
@@ -1166,6 +1273,11 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             grandTotal: number;
             paymentMethod: "Cash" | "Credit Card" | "PayPal";
             foremanName: string;
+            releaseRows?: {
+                number?: string | undefined;
+                item?: string | undefined;
+                reason?: string | undefined;
+            }[] | undefined;
             paymentDetails?: Record<string, string> | undefined;
         }>;
     }, "strip", z.ZodTypeAny, {
@@ -1197,6 +1309,11 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             grandTotal: number;
             paymentMethod: "Cash" | "Credit Card" | "PayPal";
             foremanName: string;
+            releaseRows?: {
+                number: string;
+                item: string;
+                reason: string;
+            }[] | undefined;
             paymentDetails?: Record<string, string> | undefined;
         };
     }, {
@@ -1228,6 +1345,11 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             grandTotal: number;
             paymentMethod: "Cash" | "Credit Card" | "PayPal";
             foremanName: string;
+            releaseRows?: {
+                number?: string | undefined;
+                item?: string | undefined;
+                reason?: string | undefined;
+            }[] | undefined;
             paymentDetails?: Record<string, string> | undefined;
         };
     }>>;
@@ -1244,15 +1366,7 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     truckCount: number;
     crew: string[];
     notes: string | null;
-    fromAddress: string;
-    toAddress: string;
-    stops: {
-        id: number;
-        address: string;
-        loading: boolean;
-        unloading: boolean;
-    }[];
-    contracts: string[];
+    createdAt: string;
     summary: {
         data: {
             foremanId: string;
@@ -1282,10 +1396,23 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             grandTotal: number;
             paymentMethod: "Cash" | "Credit Card" | "PayPal";
             foremanName: string;
+            releaseRows?: {
+                number: string;
+                item: string;
+                reason: string;
+            }[] | undefined;
             paymentDetails?: Record<string, string> | undefined;
         };
     } | null;
-    createdAt: string;
+    fromAddress: string;
+    toAddress: string;
+    stops: {
+        id: number;
+        address: string;
+        loading: boolean;
+        unloading: boolean;
+    }[];
+    contracts: string[];
     updatedAt: string;
     foremanId?: string | null | undefined;
     minimum?: string | null | undefined;
@@ -1308,15 +1435,7 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     truckCount: number;
     crew: string[];
     notes: string | null;
-    fromAddress: string;
-    toAddress: string;
-    stops: {
-        id: number;
-        address: string;
-        loading: boolean;
-        unloading: boolean;
-    }[];
-    contracts: string[];
+    createdAt: string;
     summary: {
         data: {
             foremanId: string;
@@ -1346,10 +1465,23 @@ declare const AdminJobResponseSchema: z.ZodObject<{
             grandTotal: number;
             paymentMethod: "Cash" | "Credit Card" | "PayPal";
             foremanName: string;
+            releaseRows?: {
+                number?: string | undefined;
+                item?: string | undefined;
+                reason?: string | undefined;
+            }[] | undefined;
             paymentDetails?: Record<string, string> | undefined;
         };
     } | null;
-    createdAt: string;
+    fromAddress: string;
+    toAddress: string;
+    stops: {
+        id: number;
+        address: string;
+        loading: boolean;
+        unloading: boolean;
+    }[];
+    contracts: string[];
     updatedAt: string;
     foremanId?: string | null | undefined;
     minimum?: string | null | undefined;
@@ -1497,9 +1629,9 @@ declare const JobPackageSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: number;
     truckCount: number;
+    hourlyRate: number;
     name: string;
     moverCount: number;
-    hourlyRate: number;
     minHours: number;
     includesGasFee: boolean;
     includesMileage: boolean;
@@ -1526,9 +1658,9 @@ declare const JobPackageSchema: z.ZodObject<{
 }, {
     id: number;
     truckCount: number;
+    hourlyRate: number;
     name: string;
     moverCount: number;
-    hourlyRate: number;
     minHours: number;
     shortName?: string | null | undefined;
     category?: string | null | undefined;
@@ -1584,9 +1716,9 @@ declare const JobPackageCreateSchema: z.ZodObject<Omit<{
     isActive: z.ZodDefault<z.ZodBoolean>;
 }, "id">, "strip", z.ZodTypeAny, {
     truckCount: number;
+    hourlyRate: number;
     name: string;
     moverCount: number;
-    hourlyRate: number;
     minHours: number;
     includesGasFee: boolean;
     includesMileage: boolean;
@@ -1612,9 +1744,9 @@ declare const JobPackageCreateSchema: z.ZodObject<Omit<{
     marketing?: any;
 }, {
     truckCount: number;
+    hourlyRate: number;
     name: string;
     moverCount: number;
-    hourlyRate: number;
     minHours: number;
     shortName?: string | null | undefined;
     category?: string | null | undefined;
@@ -1927,7 +2059,6 @@ declare const StorageHourlySchema: z.ZodObject<{
     pieceMoving: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
     itemsOfValue: z.ZodOptional<z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>, "many">>;
 }, "strip", z.ZodTypeAny, {
-    hourlyRate?: Record<string, any> | undefined;
     nameOf?: string | undefined;
     billNotifyAddress?: string | undefined;
     storageType?: string | undefined;
@@ -1953,6 +2084,7 @@ declare const StorageHourlySchema: z.ZodObject<{
         householdGoods?: boolean | undefined;
         adviceWeightCharges?: string | undefined;
     } | undefined;
+    hourlyRate?: Record<string, any> | undefined;
     valuation?: Record<string, any> | undefined;
     hundredweightRate?: Record<string, any> | undefined;
     packers?: Record<string, any> | undefined;
@@ -1961,7 +2093,6 @@ declare const StorageHourlySchema: z.ZodObject<{
     pieceMoving?: Record<string, any> | undefined;
     itemsOfValue?: Record<string, any>[] | undefined;
 }, {
-    hourlyRate?: Record<string, any> | undefined;
     nameOf?: string | undefined;
     billNotifyAddress?: string | undefined;
     storageType?: string | undefined;
@@ -1987,6 +2118,7 @@ declare const StorageHourlySchema: z.ZodObject<{
         householdGoods?: boolean | undefined;
         adviceWeightCharges?: string | undefined;
     } | undefined;
+    hourlyRate?: Record<string, any> | undefined;
     valuation?: Record<string, any> | undefined;
     hundredweightRate?: Record<string, any> | undefined;
     packers?: Record<string, any> | undefined;
@@ -2124,10 +2256,10 @@ declare const DamagePhotoSchema: z.ZodObject<{
     sizeBytes: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     id: string;
-    createdAt: number;
     storedPath: string;
     localUri: string;
     mime: "image/jpeg";
+    createdAt: number;
     uploaded?: boolean | undefined;
     remoteUrl?: string | undefined;
     width?: number | undefined;
@@ -2135,10 +2267,10 @@ declare const DamagePhotoSchema: z.ZodObject<{
     sizeBytes?: number | undefined;
 }, {
     id: string;
-    createdAt: number;
     storedPath: string;
     localUri: string;
     mime: "image/jpeg";
+    createdAt: number;
     uploaded?: boolean | undefined;
     remoteUrl?: string | undefined;
     width?: number | undefined;
@@ -2162,10 +2294,10 @@ declare const DamageRowSchema: z.ZodObject<{
         sizeBytes: z.ZodOptional<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
         id: string;
-        createdAt: number;
         storedPath: string;
         localUri: string;
         mime: "image/jpeg";
+        createdAt: number;
         uploaded?: boolean | undefined;
         remoteUrl?: string | undefined;
         width?: number | undefined;
@@ -2173,10 +2305,10 @@ declare const DamageRowSchema: z.ZodObject<{
         sizeBytes?: number | undefined;
     }, {
         id: string;
-        createdAt: number;
         storedPath: string;
         localUri: string;
         mime: "image/jpeg";
+        createdAt: number;
         uploaded?: boolean | undefined;
         remoteUrl?: string | undefined;
         width?: number | undefined;
@@ -2184,14 +2316,14 @@ declare const DamageRowSchema: z.ZodObject<{
         sizeBytes?: number | undefined;
     }>, "many">>;
 }, "strip", z.ZodTypeAny, {
-    description: string;
     item: string;
+    description: string;
     photos?: {
         id: string;
-        createdAt: number;
         storedPath: string;
         localUri: string;
         mime: "image/jpeg";
+        createdAt: number;
         uploaded?: boolean | undefined;
         remoteUrl?: string | undefined;
         width?: number | undefined;
@@ -2199,14 +2331,14 @@ declare const DamageRowSchema: z.ZodObject<{
         sizeBytes?: number | undefined;
     }[] | undefined;
 }, {
-    description: string;
     item: string;
+    description: string;
     photos?: {
         id: string;
-        createdAt: number;
         storedPath: string;
         localUri: string;
         mime: "image/jpeg";
+        createdAt: number;
         uploaded?: boolean | undefined;
         remoteUrl?: string | undefined;
         width?: number | undefined;
@@ -2217,17 +2349,17 @@ declare const DamageRowSchema: z.ZodObject<{
 type DamageRow = z.infer<typeof DamageRowSchema>;
 
 declare const ReleaseRowSchema: z.ZodObject<{
-    item: z.ZodString;
-    number: z.ZodString;
-    reason: z.ZodString;
+    item: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+    number: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+    reason: z.ZodDefault<z.ZodOptional<z.ZodString>>;
 }, "strip", z.ZodTypeAny, {
     number: string;
     item: string;
     reason: string;
 }, {
-    number: string;
-    item: string;
-    reason: string;
+    number?: string | undefined;
+    item?: string | undefined;
+    reason?: string | undefined;
 }>;
 type ReleaseRow = z.infer<typeof ReleaseRowSchema>;
 
@@ -2277,13 +2409,13 @@ declare const ContractSignaturesConfigSchema: z.ZodObject<{
         required: z.ZodOptional<z.ZodBoolean>;
         variant: z.ZodOptional<z.ZodEnum<["inline", "stacked", "mark"]>>;
     }, "strip", z.ZodTypeAny, {
-        label: string;
         key: string;
+        label: string;
         required?: boolean | undefined;
         variant?: "inline" | "stacked" | "mark" | undefined;
     }, {
-        label: string;
         key: string;
+        label: string;
         required?: boolean | undefined;
         variant?: "inline" | "stacked" | "mark" | undefined;
     }>, "many">>;
@@ -2301,8 +2433,8 @@ declare const ContractSignaturesConfigSchema: z.ZodObject<{
     }>>;
 }, "strip", z.ZodTypeAny, {
     signatures?: {
-        label: string;
         key: string;
+        label: string;
         required?: boolean | undefined;
         variant?: "inline" | "stacked" | "mark" | undefined;
     }[] | undefined;
@@ -2314,8 +2446,8 @@ declare const ContractSignaturesConfigSchema: z.ZodObject<{
     } | undefined;
 }, {
     signatures?: {
-        label: string;
         key: string;
+        label: string;
         required?: boolean | undefined;
         variant?: "inline" | "stacked" | "mark" | undefined;
     }[] | undefined;
@@ -2470,7 +2602,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         pieceMoving: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
         itemsOfValue: z.ZodOptional<z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>, "many">>;
     }, "strip", z.ZodTypeAny, {
-        hourlyRate?: Record<string, any> | undefined;
         nameOf?: string | undefined;
         billNotifyAddress?: string | undefined;
         storageType?: string | undefined;
@@ -2496,6 +2627,7 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             householdGoods?: boolean | undefined;
             adviceWeightCharges?: string | undefined;
         } | undefined;
+        hourlyRate?: Record<string, any> | undefined;
         valuation?: Record<string, any> | undefined;
         hundredweightRate?: Record<string, any> | undefined;
         packers?: Record<string, any> | undefined;
@@ -2504,7 +2636,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         pieceMoving?: Record<string, any> | undefined;
         itemsOfValue?: Record<string, any>[] | undefined;
     }, {
-        hourlyRate?: Record<string, any> | undefined;
         nameOf?: string | undefined;
         billNotifyAddress?: string | undefined;
         storageType?: string | undefined;
@@ -2530,6 +2661,7 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             householdGoods?: boolean | undefined;
             adviceWeightCharges?: string | undefined;
         } | undefined;
+        hourlyRate?: Record<string, any> | undefined;
         valuation?: Record<string, any> | undefined;
         hundredweightRate?: Record<string, any> | undefined;
         packers?: Record<string, any> | undefined;
@@ -2659,10 +2791,10 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2670,10 +2802,10 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }, {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2681,14 +2813,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }>, "many">>;
     }, "strip", z.ZodTypeAny, {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2696,14 +2828,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }[] | undefined;
     }, {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2727,10 +2859,10 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2738,10 +2870,10 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }, {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2749,14 +2881,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }>, "many">>;
     }, "strip", z.ZodTypeAny, {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2764,14 +2896,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             sizeBytes?: number | undefined;
         }[] | undefined;
     }, {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2780,17 +2912,17 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         }[] | undefined;
     }>, "many">>;
     releaseRows: z.ZodOptional<z.ZodArray<z.ZodObject<{
-        item: z.ZodString;
-        number: z.ZodString;
-        reason: z.ZodString;
+        item: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        number: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+        reason: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     }, "strip", z.ZodTypeAny, {
         number: string;
         item: string;
         reason: string;
     }, {
-        number: string;
-        item: string;
-        reason: string;
+        number?: string | undefined;
+        item?: string | undefined;
+        reason?: string | undefined;
     }>, "many">>;
     paymentDetails: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     summary: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
@@ -2805,8 +2937,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         address?: string | undefined;
         aptNo?: string | undefined;
     } | undefined;
-    paymentDetails?: Record<string, string> | undefined;
-    summary?: Record<string, any> | undefined;
     materials?: {
         packing: string;
         unpacking: string;
@@ -2846,7 +2976,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         shipperCantFurnish?: boolean | undefined;
     } | undefined;
     storageHourly?: {
-        hourlyRate?: Record<string, any> | undefined;
         nameOf?: string | undefined;
         billNotifyAddress?: string | undefined;
         storageType?: string | undefined;
@@ -2872,6 +3001,7 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             householdGoods?: boolean | undefined;
             adviceWeightCharges?: string | undefined;
         } | undefined;
+        hourlyRate?: Record<string, any> | undefined;
         valuation?: Record<string, any> | undefined;
         hundredweightRate?: Record<string, any> | undefined;
         packers?: Record<string, any> | undefined;
@@ -2898,14 +3028,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         }[] | undefined;
     } | undefined;
     damagePre?: {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2914,14 +3044,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         }[] | undefined;
     }[] | undefined;
     damagePost?: {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -2934,6 +3064,8 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         item: string;
         reason: string;
     }[] | undefined;
+    paymentDetails?: Record<string, string> | undefined;
+    summary?: Record<string, any> | undefined;
 }, {
     from?: {
         phone?: string | undefined;
@@ -2945,8 +3077,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         address?: string | undefined;
         aptNo?: string | undefined;
     } | undefined;
-    paymentDetails?: Record<string, string> | undefined;
-    summary?: Record<string, any> | undefined;
     materials?: {
         packing: string;
         unpacking: string;
@@ -2986,7 +3116,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         shipperCantFurnish?: boolean | undefined;
     } | undefined;
     storageHourly?: {
-        hourlyRate?: Record<string, any> | undefined;
         nameOf?: string | undefined;
         billNotifyAddress?: string | undefined;
         storageType?: string | undefined;
@@ -3012,6 +3141,7 @@ declare const MilburnContractDataSchema: z.ZodObject<{
             householdGoods?: boolean | undefined;
             adviceWeightCharges?: string | undefined;
         } | undefined;
+        hourlyRate?: Record<string, any> | undefined;
         valuation?: Record<string, any> | undefined;
         hundredweightRate?: Record<string, any> | undefined;
         packers?: Record<string, any> | undefined;
@@ -3038,14 +3168,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         }[] | undefined;
     } | undefined;
     damagePre?: {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -3054,14 +3184,14 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         }[] | undefined;
     }[] | undefined;
     damagePost?: {
-        description: string;
         item: string;
+        description: string;
         photos?: {
             id: string;
-            createdAt: number;
             storedPath: string;
             localUri: string;
             mime: "image/jpeg";
+            createdAt: number;
             uploaded?: boolean | undefined;
             remoteUrl?: string | undefined;
             width?: number | undefined;
@@ -3070,10 +3200,12 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         }[] | undefined;
     }[] | undefined;
     releaseRows?: {
-        number: string;
-        item: string;
-        reason: string;
+        number?: string | undefined;
+        item?: string | undefined;
+        reason?: string | undefined;
     }[] | undefined;
+    paymentDetails?: Record<string, string> | undefined;
+    summary?: Record<string, any> | undefined;
 }>;
 type MilburnContractData = z.infer<typeof MilburnContractDataSchema>;
 
@@ -3550,22 +3682,22 @@ declare const JobTypeBreakdownItemSchema: z.ZodObject<{
     label: z.ZodString;
     count: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
-    label: string;
     count: number;
+    label: string;
 }, {
-    label: string;
     count: number;
+    label: string;
 }>;
 type JobTypeBreakdownItem = z.infer<typeof JobTypeBreakdownItemSchema>;
 declare const JobTypeBreakdownSchema: z.ZodArray<z.ZodObject<{
     label: z.ZodString;
     count: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
-    label: string;
     count: number;
+    label: string;
 }, {
-    label: string;
     count: number;
+    label: string;
 }>, "many">;
 type JobTypeBreakdown = z.infer<typeof JobTypeBreakdownSchema>;
 

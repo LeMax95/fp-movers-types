@@ -2797,16 +2797,16 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         fullValuePerLb?: string | undefined;
         declaredValue?: string | undefined;
     }>>;
-    notice: z.ZodOptional<z.ZodObject<{
-        notToExceedAmount: z.ZodOptional<z.ZodString>;
-        services: z.ZodOptional<z.ZodString>;
+    notice: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        notToExceedAmount: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        other: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, "strip", z.ZodTypeAny, {
-        notToExceedAmount?: string | undefined;
-        services?: string | undefined;
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
     }, {
-        notToExceedAmount?: string | undefined;
-        services?: string | undefined;
-    }>>;
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    }>>>>;
     customerInfo: z.ZodOptional<z.ZodObject<{
         doubleDriveInitial: z.ZodOptional<z.ZodString>;
         suppliesInitial: z.ZodOptional<z.ZodString>;
@@ -3037,9 +3037,9 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         aptNo?: string | undefined;
     } | undefined;
     notice?: {
-        notToExceedAmount?: string | undefined;
-        services?: string | undefined;
-    } | undefined;
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    } | null | undefined;
     materials?: {
         packing: string;
         unpacking: string;
@@ -3177,9 +3177,9 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         aptNo?: string | undefined;
     } | undefined;
     notice?: {
-        notToExceedAmount?: string | undefined;
-        services?: string | undefined;
-    } | undefined;
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    } | null | undefined;
     materials?: {
         packing: string;
         unpacking: string;

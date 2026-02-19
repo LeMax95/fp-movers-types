@@ -221,10 +221,7 @@ var MilburnContractDataSchema = z13.object({
   delivery: DeliverySchema.optional(),
   storageHourly: StorageHourlySchema.optional(),
   valuation: ValuationSchema.optional(),
-  notice: z13.object({
-    notToExceedAmount: z13.string().optional(),
-    services: z13.string().optional()
-  }).optional(),
+  notice: JobNoticeSchema.optional(),
   customerInfo: CustomerInfoSchema.optional(),
   materials: z13.array(PackingMaterialRowSchema).optional(),
   damagePre: z13.array(DamageRowSchema).optional(),

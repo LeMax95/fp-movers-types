@@ -301,10 +301,7 @@ var MilburnContractDataSchema = import_zod13.z.object({
   delivery: DeliverySchema.optional(),
   storageHourly: StorageHourlySchema.optional(),
   valuation: ValuationSchema.optional(),
-  notice: import_zod13.z.object({
-    notToExceedAmount: import_zod13.z.string().optional(),
-    services: import_zod13.z.string().optional()
-  }).optional(),
+  notice: JobNoticeSchema.optional(),
   customerInfo: CustomerInfoSchema.optional(),
   materials: import_zod13.z.array(PackingMaterialRowSchema).optional(),
   damagePre: import_zod13.z.array(DamageRowSchema).optional(),

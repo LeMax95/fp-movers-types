@@ -8,6 +8,7 @@ import { CustomerInfoSchema } from "./milburn-customer-info";
 import { PackingMaterialRowSchema } from "./milburn-packing";
 import { DamageRowSchema } from "./milburn-damage";
 import { ReleaseRowSchema } from "./milburn-release";
+import  { JobNoticeSchema } from "../job/job-core";
 
 export const MilburnContractDataSchema = z.object({
   from: AddressBlockSchema.optional(),
@@ -16,10 +17,7 @@ export const MilburnContractDataSchema = z.object({
   delivery: DeliverySchema.optional(),
   storageHourly: StorageHourlySchema.optional(),
   valuation: ValuationSchema.optional(),
-  notice: z.object({
-    notToExceedAmount: z.string().optional(),
-    services: z.string().optional()
-  }).optional(),
+  notice: JobNoticeSchema.optional(),
   customerInfo: CustomerInfoSchema.optional(),
   materials: z.array(PackingMaterialRowSchema).optional(),
   damagePre: z.array(DamageRowSchema).optional(),

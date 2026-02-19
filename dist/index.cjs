@@ -389,6 +389,7 @@ var import_zod18 = require("zod");
 var FieldJobUpdateSchema = import_zod18.z.object({
   crew: import_zod18.z.array(import_zod18.z.string()).optional(),
   notes: import_zod18.z.string().optional(),
+  notice: JobNoticeSchema.optional(),
   status: JobStatusEnum.optional(),
   summary: JobSummarySchema.optional(),
   signatures: ScopedSignaturesSchema.optional(),

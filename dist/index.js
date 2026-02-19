@@ -309,6 +309,7 @@ import { z as z18 } from "zod";
 var FieldJobUpdateSchema = z18.object({
   crew: z18.array(z18.string()).optional(),
   notes: z18.string().optional(),
+  notice: JobNoticeSchema.optional(),
   status: JobStatusEnum.optional(),
   summary: JobSummarySchema.optional(),
   signatures: ScopedSignaturesSchema.optional(),

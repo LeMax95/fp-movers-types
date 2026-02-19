@@ -838,6 +838,16 @@ type CreateJobPayload = z.infer<typeof CreateJobPayloadSchema>;
 declare const FieldJobUpdateSchema: z.ZodObject<{
     crew: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     notes: z.ZodOptional<z.ZodString>;
+    notice: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        notToExceedAmount: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        other: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    }, "strip", z.ZodTypeAny, {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    }, {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    }>>>>;
     status: z.ZodOptional<z.ZodEnum<["draft", "scheduled", "in_progress", "completed", "cancelled"]>>;
     summary: z.ZodOptional<z.ZodObject<{
         steps: z.ZodArray<z.ZodObject<{
@@ -1023,6 +1033,10 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
     status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
     crew?: string[] | undefined;
     notes?: string | undefined;
+    notice?: {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    } | null | undefined;
     signatures?: {
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;
@@ -1071,6 +1085,10 @@ declare const FieldJobUpdateSchema: z.ZodObject<{
     status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
     crew?: string[] | undefined;
     notes?: string | undefined;
+    notice?: {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    } | null | undefined;
     signatures?: {
         pre: Record<string, Record<string, string | null>>;
         post: Record<string, Record<string, string | null>>;

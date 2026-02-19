@@ -7,6 +7,10 @@ var JobStatusEnum = z.enum([
   "completed",
   "cancelled"
 ]);
+var JobNoticeSchema = z.object({
+  notToExceedAmount: z.string().nullable().optional(),
+  other: z.string().nullable().optional()
+}).nullable().optional();
 var JobCoreSchema = z.object({
   id: z.string(),
   client: z.string(),
@@ -22,6 +26,7 @@ var JobCoreSchema = z.object({
   truckCount: z.number(),
   crew: z.array(z.string()).optional(),
   notes: z.string().nullable().optional(),
+  notice: JobNoticeSchema,
   // Extra optional FE fields
   volume: z.string().optional(),
   moveType: z.string().optional(),
@@ -693,6 +698,7 @@ export {
   FieldJobUpdateSchema,
   JobContractsSchema,
   JobCoreSchema,
+  JobNoticeSchema,
   JobPackageCreateSchema,
   JobPackageSchema,
   JobPartialUpdateSchema,

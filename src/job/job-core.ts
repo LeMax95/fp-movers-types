@@ -6,6 +6,13 @@ export const JobStatusEnum = z.enum([
   "completed",
   "cancelled",
 ]);
+export const JobNoticeSchema = z
+  .object({
+    notToExceedAmount: z.string().nullable().optional(),
+    other: z.string().nullable().optional(),
+  })
+  .nullable()
+  .optional();
 export const JobCoreSchema = z.object({
   id: z.string(),
   client: z.string(),
@@ -26,7 +33,7 @@ export const JobCoreSchema = z.object({
   truckCount: z.number(),
   crew: z.array(z.string()).optional(),
   notes: z.string().nullable().optional(),
-
+notice: JobNoticeSchema,
   // Extra optional FE fields
   volume: z.string().optional(),
   moveType: z.string().optional(),

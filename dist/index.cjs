@@ -42,6 +42,7 @@ __export(src_exports, {
   FieldJobUpdateSchema: () => FieldJobUpdateSchema,
   JobContractsSchema: () => JobContractsSchema,
   JobCoreSchema: () => JobCoreSchema,
+  JobNoticeSchema: () => JobNoticeSchema,
   JobPackageCreateSchema: () => JobPackageCreateSchema,
   JobPackageSchema: () => JobPackageSchema,
   JobPartialUpdateSchema: () => JobPartialUpdateSchema,
@@ -86,6 +87,10 @@ var JobStatusEnum = import_zod.z.enum([
   "completed",
   "cancelled"
 ]);
+var JobNoticeSchema = import_zod.z.object({
+  notToExceedAmount: import_zod.z.string().nullable().optional(),
+  other: import_zod.z.string().nullable().optional()
+}).nullable().optional();
 var JobCoreSchema = import_zod.z.object({
   id: import_zod.z.string(),
   client: import_zod.z.string(),
@@ -101,6 +106,7 @@ var JobCoreSchema = import_zod.z.object({
   truckCount: import_zod.z.number(),
   crew: import_zod.z.array(import_zod.z.string()).optional(),
   notes: import_zod.z.string().nullable().optional(),
+  notice: JobNoticeSchema,
   // Extra optional FE fields
   volume: import_zod.z.string().optional(),
   moveType: import_zod.z.string().optional(),

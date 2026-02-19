@@ -1,6 +1,16 @@
 import { z } from 'zod';
 
 declare const JobStatusEnum: z.ZodEnum<["draft", "scheduled", "in_progress", "completed", "cancelled"]>;
+declare const JobNoticeSchema: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+    notToExceedAmount: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    other: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+}, "strip", z.ZodTypeAny, {
+    notToExceedAmount?: string | null | undefined;
+    other?: string | null | undefined;
+}, {
+    notToExceedAmount?: string | null | undefined;
+    other?: string | null | undefined;
+}>>>;
 declare const JobCoreSchema: z.ZodObject<{
     id: z.ZodString;
     client: z.ZodString;
@@ -16,6 +26,16 @@ declare const JobCoreSchema: z.ZodObject<{
     truckCount: z.ZodNumber;
     crew: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     notes: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    notice: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        notToExceedAmount: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        other: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    }, "strip", z.ZodTypeAny, {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    }, {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    }>>>;
     volume: z.ZodOptional<z.ZodString>;
     moveType: z.ZodOptional<z.ZodString>;
     distance: z.ZodOptional<z.ZodString>;
@@ -25,22 +45,26 @@ declare const JobCoreSchema: z.ZodObject<{
     contractVersion: z.ZodNumber;
     packageId: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
 }, "strip", z.ZodTypeAny, {
+    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     id: string;
     client: string;
-    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     moveDate: string;
     from: string;
     to: string;
     truckCount: number;
     contractVersion: number;
+    minimum?: string | undefined;
     phone?: string | undefined;
     email?: string | undefined;
     foremanId?: string | null | undefined;
     moveTime?: string | null | undefined;
     reference?: string | null | undefined;
-    minimum?: string | undefined;
     crew?: string[] | undefined;
     notes?: string | null | undefined;
+    notice?: {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    } | null | undefined;
     volume?: string | undefined;
     moveType?: string | undefined;
     distance?: string | undefined;
@@ -48,22 +72,26 @@ declare const JobCoreSchema: z.ZodObject<{
     gasFee?: string | undefined;
     packageId?: number | null | undefined;
 }, {
+    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     id: string;
     client: string;
-    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     moveDate: string;
     from: string;
     to: string;
     truckCount: number;
     contractVersion: number;
+    minimum?: string | undefined;
     phone?: string | undefined;
     email?: string | undefined;
     foremanId?: string | null | undefined;
     moveTime?: string | null | undefined;
     reference?: string | null | undefined;
-    minimum?: string | undefined;
     crew?: string[] | undefined;
     notes?: string | null | undefined;
+    notice?: {
+        notToExceedAmount?: string | null | undefined;
+        other?: string | null | undefined;
+    } | null | undefined;
     volume?: string | undefined;
     moveType?: string | undefined;
     distance?: string | undefined;
@@ -383,6 +411,16 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         truckCount: z.ZodNumber;
         crew: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
         notes: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        notice: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            notToExceedAmount: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            other: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        }, "strip", z.ZodTypeAny, {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        }, {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        }>>>;
         volume: z.ZodOptional<z.ZodString>;
         moveType: z.ZodOptional<z.ZodString>;
         distance: z.ZodOptional<z.ZodString>;
@@ -392,22 +430,26 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         contractVersion: z.ZodNumber;
         packageId: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
     }, "strip", z.ZodTypeAny, {
+        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         id: string;
         client: string;
-        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         moveDate: string;
         from: string;
         to: string;
         truckCount: number;
         contractVersion: number;
+        minimum?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
         foremanId?: string | null | undefined;
         moveTime?: string | null | undefined;
         reference?: string | null | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -415,22 +457,26 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
         gasFee?: string | undefined;
         packageId?: number | null | undefined;
     }, {
+        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         id: string;
         client: string;
-        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         moveDate: string;
         from: string;
         to: string;
         truckCount: number;
         contractVersion: number;
+        minimum?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
         foremanId?: string | null | undefined;
         moveTime?: string | null | undefined;
         reference?: string | null | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -635,22 +681,26 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
     }>>;
 }, "strip", z.ZodTypeAny, {
     job: {
+        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         id: string;
         client: string;
-        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         moveDate: string;
         from: string;
         to: string;
         truckCount: number;
         contractVersion: number;
+        minimum?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
         foremanId?: string | null | undefined;
         moveTime?: string | null | undefined;
         reference?: string | null | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -707,22 +757,26 @@ declare const CreateJobPayloadSchema: z.ZodObject<{
     } | undefined;
 }, {
     job: {
+        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         id: string;
         client: string;
-        status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
         moveDate: string;
         from: string;
         to: string;
         truckCount: number;
         contractVersion: number;
+        minimum?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
         foremanId?: string | null | undefined;
         moveTime?: string | null | undefined;
         reference?: string | null | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -1355,11 +1409,11 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     }>>;
     contracts: z.ZodArray<z.ZodString, "many">;
 }, "strip", z.ZodTypeAny, {
+    status: string;
     id: string;
     client: string;
     phone: string | null;
     email: string | null;
-    status: string;
     moveDate: string;
     moveTime: string | null;
     reference: string | null;
@@ -1414,8 +1468,8 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     }[];
     contracts: string[];
     updatedAt: string;
-    foremanId?: string | null | undefined;
     minimum?: string | null | undefined;
+    foremanId?: string | null | undefined;
     volume?: string | null | undefined;
     moveType?: string | null | undefined;
     distance?: string | null | undefined;
@@ -1424,11 +1478,11 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     packageId?: number | null | undefined;
     foremanName?: string | null | undefined;
 }, {
+    status: string;
     id: string;
     client: string;
     phone: string | null;
     email: string | null;
-    status: string;
     moveDate: string;
     moveTime: string | null;
     reference: string | null;
@@ -1483,8 +1537,8 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     }[];
     contracts: string[];
     updatedAt: string;
-    foremanId?: string | null | undefined;
     minimum?: string | null | undefined;
+    foremanId?: string | null | undefined;
     volume?: string | null | undefined;
     moveType?: string | null | undefined;
     distance?: string | null | undefined;
@@ -1794,6 +1848,16 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         truckCount: z.ZodOptional<z.ZodNumber>;
         crew: z.ZodOptional<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
         notes: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+        notice: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            notToExceedAmount: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            other: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        }, "strip", z.ZodTypeAny, {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        }, {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        }>>>>;
         volume: z.ZodOptional<z.ZodOptional<z.ZodString>>;
         moveType: z.ZodOptional<z.ZodOptional<z.ZodString>>;
         distance: z.ZodOptional<z.ZodOptional<z.ZodString>>;
@@ -1803,11 +1867,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         contractVersion: z.ZodOptional<z.ZodNumber>;
         packageId: z.ZodOptional<z.ZodOptional<z.ZodNullable<z.ZodNumber>>>;
     }, "strip", z.ZodTypeAny, {
+        minimum?: string | undefined;
+        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         id?: string | undefined;
         client?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
-        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         foremanId?: string | null | undefined;
         moveDate?: string | undefined;
         moveTime?: string | null | undefined;
@@ -1815,9 +1880,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         from?: string | undefined;
         to?: string | undefined;
         truckCount?: number | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -1826,11 +1894,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         contractVersion?: number | undefined;
         packageId?: number | null | undefined;
     }, {
+        minimum?: string | undefined;
+        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         id?: string | undefined;
         client?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
-        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         foremanId?: string | null | undefined;
         moveDate?: string | undefined;
         moveTime?: string | null | undefined;
@@ -1838,9 +1907,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         from?: string | undefined;
         to?: string | undefined;
         truckCount?: number | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -1864,11 +1936,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
     }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     job: {
+        minimum?: string | undefined;
+        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         id?: string | undefined;
         client?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
-        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         foremanId?: string | null | undefined;
         moveDate?: string | undefined;
         moveTime?: string | null | undefined;
@@ -1876,9 +1949,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         from?: string | undefined;
         to?: string | undefined;
         truckCount?: number | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -1894,11 +1970,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
     }[] | undefined;
 }, {
     job: {
+        minimum?: string | undefined;
+        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         id?: string | undefined;
         client?: string | undefined;
         phone?: string | undefined;
         email?: string | undefined;
-        status?: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled" | undefined;
         foremanId?: string | null | undefined;
         moveDate?: string | undefined;
         moveTime?: string | null | undefined;
@@ -1906,9 +1983,12 @@ declare const JobPartialUpdateSchema: z.ZodObject<{
         from?: string | undefined;
         to?: string | undefined;
         truckCount?: number | undefined;
-        minimum?: string | undefined;
         crew?: string[] | undefined;
         notes?: string | null | undefined;
+        notice?: {
+            notToExceedAmount?: string | null | undefined;
+            other?: string | null | undefined;
+        } | null | undefined;
         volume?: string | undefined;
         moveType?: string | undefined;
         distance?: string | undefined;
@@ -2937,6 +3017,10 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         address?: string | undefined;
         aptNo?: string | undefined;
     } | undefined;
+    notice?: {
+        notToExceedAmount?: string | undefined;
+        services?: string | undefined;
+    } | undefined;
     materials?: {
         packing: string;
         unpacking: string;
@@ -3009,10 +3093,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         unpacking?: Record<string, any> | undefined;
         pieceMoving?: Record<string, any> | undefined;
         itemsOfValue?: Record<string, any>[] | undefined;
-    } | undefined;
-    notice?: {
-        notToExceedAmount?: string | undefined;
-        services?: string | undefined;
     } | undefined;
     customerInfo?: {
         doubleDriveInitial?: string | undefined;
@@ -3077,6 +3157,10 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         address?: string | undefined;
         aptNo?: string | undefined;
     } | undefined;
+    notice?: {
+        notToExceedAmount?: string | undefined;
+        services?: string | undefined;
+    } | undefined;
     materials?: {
         packing: string;
         unpacking: string;
@@ -3149,10 +3233,6 @@ declare const MilburnContractDataSchema: z.ZodObject<{
         unpacking?: Record<string, any> | undefined;
         pieceMoving?: Record<string, any> | undefined;
         itemsOfValue?: Record<string, any>[] | undefined;
-    } | undefined;
-    notice?: {
-        notToExceedAmount?: string | undefined;
-        services?: string | undefined;
     } | undefined;
     customerInfo?: {
         doubleDriveInitial?: string | undefined;
@@ -3660,17 +3740,17 @@ declare const LatestJobItemSchema: z.ZodObject<{
         totalPrice: number;
     }>>>;
 }, "strip", z.ZodTypeAny, {
+    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     id: string;
     client: string;
-    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     createdAt: string;
     summary?: {
         totalPrice: number;
     } | null | undefined;
 }, {
+    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     id: string;
     client: string;
-    status: "draft" | "scheduled" | "in_progress" | "completed" | "cancelled";
     createdAt: string;
     summary?: {
         totalPrice: number;
@@ -3728,4 +3808,4 @@ declare const NotificationSchema: z.ZodObject<{
 }>;
 type NotificationItem = z.infer<typeof NotificationSchema>;
 
-export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type ReleaseRow, ReleaseRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };
+export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, JobNoticeSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type ReleaseRow, ReleaseRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };

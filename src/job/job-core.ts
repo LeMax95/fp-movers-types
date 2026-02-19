@@ -50,3 +50,4 @@ notice: JobNoticeSchema,
 });
 
 export type JobCore = z.infer<typeof JobCoreSchema>;
+export type JobNotice = z.infer<typeof JobNoticeSchema>;

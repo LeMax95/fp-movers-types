@@ -321,6 +321,25 @@ var AdminJobStopSchema = z19.object({
   loading: z19.boolean(),
   unloading: z19.boolean()
 });
+var AdminJobDamagePhotoSchema = z19.object({
+  id: z19.string(),
+  url: z19.string(),
+  thumbUrl: z19.string().nullable().optional(),
+  mime: z19.string().nullable().optional(),
+  width: z19.number().nullable().optional(),
+  height: z19.number().nullable().optional(),
+  sizeBytes: z19.number().nullable().optional(),
+  createdAt: z19.string()
+});
+var AdminJobDamageSchema = z19.object({
+  id: z19.string(),
+  batch: z19.enum(["pre", "post"]),
+  rowIndex: z19.number(),
+  item: z19.string(),
+  description: z19.string().nullable(),
+  createdAt: z19.string(),
+  photos: z19.array(AdminJobDamagePhotoSchema)
+});
 var AdminContractKeySchema = z19.string();
 var AdminContractListSchema = z19.array(AdminContractKeySchema);
 var AdminJobResponseSchema = z19.object({
@@ -333,6 +352,7 @@ var AdminJobResponseSchema = z19.object({
   moveDate: z19.string(),
   moveTime: z19.string().nullable(),
   reference: z19.string().nullable(),
+  damages: z19.array(AdminJobDamageSchema).optional(),
   fromAddress: z19.string(),
   toAddress: z19.string(),
   truckCount: z19.number(),
@@ -677,6 +697,8 @@ export {
   AddressBlockSchema,
   AdminContractKeySchema,
   AdminContractListSchema,
+  AdminJobDamagePhotoSchema,
+  AdminJobDamageSchema,
   AdminJobResponseSchema,
   AdminJobStopSchema,
   AdminUserResponseSchema,

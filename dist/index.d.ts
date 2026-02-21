@@ -1152,6 +1152,104 @@ declare const AdminJobStopSchema: z.ZodObject<{
     loading: boolean;
     unloading: boolean;
 }>;
+declare const AdminJobDamagePhotoSchema: z.ZodObject<{
+    id: z.ZodString;
+    url: z.ZodString;
+    thumbUrl: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    mime: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    width: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+    height: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+    sizeBytes: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+    createdAt: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    createdAt: string;
+    url: string;
+    mime?: string | null | undefined;
+    width?: number | null | undefined;
+    height?: number | null | undefined;
+    sizeBytes?: number | null | undefined;
+    thumbUrl?: string | null | undefined;
+}, {
+    id: string;
+    createdAt: string;
+    url: string;
+    mime?: string | null | undefined;
+    width?: number | null | undefined;
+    height?: number | null | undefined;
+    sizeBytes?: number | null | undefined;
+    thumbUrl?: string | null | undefined;
+}>;
+declare const AdminJobDamageSchema: z.ZodObject<{
+    id: z.ZodString;
+    batch: z.ZodEnum<["pre", "post"]>;
+    rowIndex: z.ZodNumber;
+    item: z.ZodString;
+    description: z.ZodNullable<z.ZodString>;
+    createdAt: z.ZodString;
+    photos: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        url: z.ZodString;
+        thumbUrl: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        mime: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        width: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+        height: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+        sizeBytes: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+        createdAt: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        createdAt: string;
+        url: string;
+        mime?: string | null | undefined;
+        width?: number | null | undefined;
+        height?: number | null | undefined;
+        sizeBytes?: number | null | undefined;
+        thumbUrl?: string | null | undefined;
+    }, {
+        id: string;
+        createdAt: string;
+        url: string;
+        mime?: string | null | undefined;
+        width?: number | null | undefined;
+        height?: number | null | undefined;
+        sizeBytes?: number | null | undefined;
+        thumbUrl?: string | null | undefined;
+    }>, "many">;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    item: string;
+    createdAt: string;
+    description: string | null;
+    photos: {
+        id: string;
+        createdAt: string;
+        url: string;
+        mime?: string | null | undefined;
+        width?: number | null | undefined;
+        height?: number | null | undefined;
+        sizeBytes?: number | null | undefined;
+        thumbUrl?: string | null | undefined;
+    }[];
+    batch: "pre" | "post";
+    rowIndex: number;
+}, {
+    id: string;
+    item: string;
+    createdAt: string;
+    description: string | null;
+    photos: {
+        id: string;
+        createdAt: string;
+        url: string;
+        mime?: string | null | undefined;
+        width?: number | null | undefined;
+        height?: number | null | undefined;
+        sizeBytes?: number | null | undefined;
+        thumbUrl?: string | null | undefined;
+    }[];
+    batch: "pre" | "post";
+    rowIndex: number;
+}>;
 declare const AdminContractKeySchema: z.ZodString;
 declare const AdminContractListSchema: z.ZodArray<z.ZodString, "many">;
 declare const AdminJobResponseSchema: z.ZodObject<{
@@ -1164,6 +1262,76 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     moveDate: z.ZodString;
     moveTime: z.ZodNullable<z.ZodString>;
     reference: z.ZodNullable<z.ZodString>;
+    damages: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        batch: z.ZodEnum<["pre", "post"]>;
+        rowIndex: z.ZodNumber;
+        item: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        photos: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            url: z.ZodString;
+            thumbUrl: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            mime: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            width: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+            height: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+            sizeBytes: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+            createdAt: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            id: string;
+            createdAt: string;
+            url: string;
+            mime?: string | null | undefined;
+            width?: number | null | undefined;
+            height?: number | null | undefined;
+            sizeBytes?: number | null | undefined;
+            thumbUrl?: string | null | undefined;
+        }, {
+            id: string;
+            createdAt: string;
+            url: string;
+            mime?: string | null | undefined;
+            width?: number | null | undefined;
+            height?: number | null | undefined;
+            sizeBytes?: number | null | undefined;
+            thumbUrl?: string | null | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        item: string;
+        createdAt: string;
+        description: string | null;
+        photos: {
+            id: string;
+            createdAt: string;
+            url: string;
+            mime?: string | null | undefined;
+            width?: number | null | undefined;
+            height?: number | null | undefined;
+            sizeBytes?: number | null | undefined;
+            thumbUrl?: string | null | undefined;
+        }[];
+        batch: "pre" | "post";
+        rowIndex: number;
+    }, {
+        id: string;
+        item: string;
+        createdAt: string;
+        description: string | null;
+        photos: {
+            id: string;
+            createdAt: string;
+            url: string;
+            mime?: string | null | undefined;
+            width?: number | null | undefined;
+            height?: number | null | undefined;
+            sizeBytes?: number | null | undefined;
+            thumbUrl?: string | null | undefined;
+        }[];
+        batch: "pre" | "post";
+        rowIndex: number;
+    }>, "many">>;
     fromAddress: z.ZodString;
     toAddress: z.ZodString;
     truckCount: z.ZodNumber;
@@ -1496,6 +1664,24 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     gasFee?: string | null | undefined;
     packageId?: number | null | undefined;
     foremanName?: string | null | undefined;
+    damages?: {
+        id: string;
+        item: string;
+        createdAt: string;
+        description: string | null;
+        photos: {
+            id: string;
+            createdAt: string;
+            url: string;
+            mime?: string | null | undefined;
+            width?: number | null | undefined;
+            height?: number | null | undefined;
+            sizeBytes?: number | null | undefined;
+            thumbUrl?: string | null | undefined;
+        }[];
+        batch: "pre" | "post";
+        rowIndex: number;
+    }[] | undefined;
 }, {
     status: string;
     id: string;
@@ -1565,6 +1751,24 @@ declare const AdminJobResponseSchema: z.ZodObject<{
     gasFee?: string | null | undefined;
     packageId?: number | null | undefined;
     foremanName?: string | null | undefined;
+    damages?: {
+        id: string;
+        item: string;
+        createdAt: string;
+        description: string | null;
+        photos: {
+            id: string;
+            createdAt: string;
+            url: string;
+            mime?: string | null | undefined;
+            width?: number | null | undefined;
+            height?: number | null | undefined;
+            sizeBytes?: number | null | undefined;
+            thumbUrl?: string | null | undefined;
+        }[];
+        batch: "pre" | "post";
+        rowIndex: number;
+    }[] | undefined;
 }>;
 type AdminJobResponse = z.infer<typeof AdminJobResponseSchema>;
 
@@ -3827,4 +4031,4 @@ declare const NotificationSchema: z.ZodObject<{
 }>;
 type NotificationItem = z.infer<typeof NotificationSchema>;
 
-export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobNotice, JobNoticeSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type ReleaseRow, ReleaseRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };
+export { type AddressBlock, AddressBlockSchema, AdminContractKeySchema, AdminContractListSchema, AdminJobDamagePhotoSchema, AdminJobDamageSchema, type AdminJobResponse, AdminJobResponseSchema, AdminJobStopSchema, type AdminUserResponse, AdminUserResponseSchema, type ContractPropsBase, type ContractPropsFieldApp, type ContractPropsRenderer, type ContractSignaturesConfig, ContractSignaturesConfigSchema, type ContractSignaturesConfigType, type CreateJobPayload, CreateJobPayloadSchema, type CreateUserPayload, CreateUserPayloadSchema, type CreateUserResponse, CreateUserResponseSchema, type CustomerInfoData, CustomerInfoSchema, CustomerReleaseItemSchema, type DamagePhoto, DamagePhotoSchema, type DamageRow, DamageRowSchema, type DashboardKpiMetric, DashboardKpiMetricSchema, type DashboardKpis, DashboardKpisSchema, type DashboardRange, DashboardRangeSchema, type DeliveryData, DeliverySchema, type ExtraItem, ExtraItemSchema, type FieldJobUpdate, FieldJobUpdateSchema, type JobContracts, JobContractsSchema, type JobCore, JobCoreSchema, type JobNotice, JobNoticeSchema, type JobPackage, type JobPackageCreate, JobPackageCreateSchema, type JobPackageRow, JobPackageSchema, type JobPartialUpdate, JobPartialUpdateSchema, type JobSettings, JobSettingsSchema, JobStatusEnum, type JobStop, type JobStops, type JobSummary, JobSummarySchema, type JobTypeBreakdown, type JobTypeBreakdownItem, JobTypeBreakdownItemSchema, JobTypeBreakdownSchema, type JobsByStatusItem, JobsByStatusItemSchema, type LatestJobItem, LatestJobItemSchema, type LoginPayload, LoginPayloadSchema, type LoginResponse, LoginResponseSchema, type MilburnContractData, MilburnContractDataSchema, type MilburnMeta, MilburnMetaSchema, type NotificationItem, NotificationSchema, type OnboardingCompletePayload, OnboardingCompletePayloadSchema, POST_MOVE_CONTRACTS, PRE_MOVE_CONTRACTS, type PackageMarketing, PackageMarketingSchema, type PackingMaterialRow, PackingMaterialRowSchema, type ReleaseRow, ReleaseRowSchema, type RevenueBreakdown, RevenueBreakdownSchema, type ScopedSignatures, ScopedSignaturesSchema, type SharedContractDefinition, type SignatureDefinition, SignatureScopeSchema, type Step, StepSchema, StopSchema, StopsSchema, type StorageHourlyData, StorageHourlySchema, type UpdateUserPayload, UpdateUserPayloadSchema, type UserCore, UserCoreSchema, type UserRole, UserRoleSchema, type ValuationData, ValuationSchema };

@@ -23,6 +23,8 @@ __export(src_exports, {
   AddressBlockSchema: () => AddressBlockSchema,
   AdminContractKeySchema: () => AdminContractKeySchema,
   AdminContractListSchema: () => AdminContractListSchema,
+  AdminJobDamagePhotoSchema: () => AdminJobDamagePhotoSchema,
+  AdminJobDamageSchema: () => AdminJobDamageSchema,
   AdminJobResponseSchema: () => AdminJobResponseSchema,
   AdminJobStopSchema: () => AdminJobStopSchema,
   AdminUserResponseSchema: () => AdminUserResponseSchema,
@@ -401,6 +403,25 @@ var AdminJobStopSchema = import_zod19.z.object({
   loading: import_zod19.z.boolean(),
   unloading: import_zod19.z.boolean()
 });
+var AdminJobDamagePhotoSchema = import_zod19.z.object({
+  id: import_zod19.z.string(),
+  url: import_zod19.z.string(),
+  thumbUrl: import_zod19.z.string().nullable().optional(),
+  mime: import_zod19.z.string().nullable().optional(),
+  width: import_zod19.z.number().nullable().optional(),
+  height: import_zod19.z.number().nullable().optional(),
+  sizeBytes: import_zod19.z.number().nullable().optional(),
+  createdAt: import_zod19.z.string()
+});
+var AdminJobDamageSchema = import_zod19.z.object({
+  id: import_zod19.z.string(),
+  batch: import_zod19.z.enum(["pre", "post"]),
+  rowIndex: import_zod19.z.number(),
+  item: import_zod19.z.string(),
+  description: import_zod19.z.string().nullable(),
+  createdAt: import_zod19.z.string(),
+  photos: import_zod19.z.array(AdminJobDamagePhotoSchema)
+});
 var AdminContractKeySchema = import_zod19.z.string();
 var AdminContractListSchema = import_zod19.z.array(AdminContractKeySchema);
 var AdminJobResponseSchema = import_zod19.z.object({
@@ -413,6 +434,7 @@ var AdminJobResponseSchema = import_zod19.z.object({
   moveDate: import_zod19.z.string(),
   moveTime: import_zod19.z.string().nullable(),
   reference: import_zod19.z.string().nullable(),
+  damages: import_zod19.z.array(AdminJobDamageSchema).optional(),
   fromAddress: import_zod19.z.string(),
   toAddress: import_zod19.z.string(),
   truckCount: import_zod19.z.number(),

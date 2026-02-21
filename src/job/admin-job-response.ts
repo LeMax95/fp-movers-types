@@ -13,7 +13,26 @@ export const AdminJobStopSchema = z.object({
   loading: z.boolean(),
   unloading: z.boolean(),
 });
+export const AdminJobDamagePhotoSchema = z.object({
+  id: z.string(),
+  url: z.string(),
+  thumbUrl: z.string().nullable().optional(),
+  mime: z.string().nullable().optional(),
+  width: z.number().nullable().optional(),
+  height: z.number().nullable().optional(),
+  sizeBytes: z.number().nullable().optional(),
+  createdAt: z.string(),
+});
 
+export const AdminJobDamageSchema = z.object({
+  id: z.string(),
+  batch: z.enum(["pre", "post"]),
+  rowIndex: z.number(),
+  item: z.string(),
+  description: z.string().nullable(),
+  createdAt: z.string(),
+  photos: z.array(AdminJobDamagePhotoSchema),
+});
 // ──────────────────────────
 // ADMIN CONTRACT LIST (keys only)
 // ──────────────────────────
@@ -35,7 +54,7 @@ export const AdminJobResponseSchema = z.object({
   moveDate: z.string(),
   moveTime: z.string().nullable(),
   reference: z.string().nullable(),
-
+  damages: z.array(AdminJobDamageSchema).optional(),
   fromAddress: z.string(),
   toAddress: z.string(),
 
